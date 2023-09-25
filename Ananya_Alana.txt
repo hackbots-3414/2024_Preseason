@@ -1,6 +1,6 @@
 Your name
 
-Ananya
+Ananya 
 
 I am a freshman
 
@@ -17,4 +17,9 @@ I like to draw and write stories
 Experience with Programming
 
 I took a programming course over the summer, but my knowledge is very limited
+
+Robotics Goals
+
+I want to increase my knowledge in coding things overall because it is something I want to do when I'm older, so I thin robotics club is a good place
+
 
