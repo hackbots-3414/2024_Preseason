@@ -14,6 +14,7 @@ public class DefaultTeleopCommand extends CommandBase {
 
   /** Creates a new DefaultTeleopCommand. */
   public DefaultTeleopCommand(CommandXboxController xboxController, Drivetrain drivetrain) {
+    addRequirements(drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
     this.xboxController = xboxController;
     this.drivetrain = drivetrain;
