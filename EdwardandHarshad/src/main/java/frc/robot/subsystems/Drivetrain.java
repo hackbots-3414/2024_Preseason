@@ -20,8 +20,8 @@ public class Drivetrain extends SubsystemBase {
     motorBackLeft.follow(motorFrontLeft);
     motorBackRight.follow(motorFrontRight);
 
-    motorFrontLeft.setInverted(true);
     motorFrontRight.setInverted(true);
+    motorBackRight.setInverted(true);
   }
 
   @Override
