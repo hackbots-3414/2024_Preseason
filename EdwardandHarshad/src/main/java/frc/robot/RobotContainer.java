@@ -48,6 +48,7 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(defaultTeleopCommand);
     // Configure the trigger bindings
     configureBindings();
+    SmartDashboard.putData("Auton",  Autos.getAutonChooser(drivetrain));
   }
 
   /**
