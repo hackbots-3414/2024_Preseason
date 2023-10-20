@@ -15,6 +15,7 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX motorFrontRight = new WPI_TalonFX(13);
   private WPI_TalonFX motorBackRight = new WPI_TalonFX(14);
   private DifferentialDrive differentialDrive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
+
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     motorBackLeft.follow(motorFrontLeft);
@@ -35,5 +36,16 @@ public class Drivetrain extends SubsystemBase {
 
   public void drive(double xSpeed, double zRotation) {
     differentialDrive.arcadeDrive(xSpeed, zRotation);
+  }
+
+  public void autonDrive(double xSpeed, double zRotation) {
+    differentialDrive.arcadeDrive(xSpeed, zRotation, false);
+
+  }
+
+  public double getPosition() {
+    double average = (motorFrontLeft.getSelectedSensorPosition() + motorFrontRight.getSelectedSensorPosition()
+        + motorBackLeft.getSelectedSensorPosition() + motorBackRight.getSelectedSensorPosition()) / 4;
+        return average;
   }
 }
