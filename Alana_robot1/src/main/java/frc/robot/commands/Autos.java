@@ -13,23 +13,34 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public final class Autos {
+  private static long distanceToDrive;
+  private static SendableChooser<Command> autonList;
+  private static long millisecondsToDrive;
+
   /** Example static factory for an autonomous command. */
   public static CommandBase exampleAuto(ExampleSubsystem subsystem) {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
   }
 
-  public static CommandBase driveStraightByTime(Drivetrain drivetrain, long millisecondsToDrive) {
+  public static CommandBase driveStraightByTime(Drivetrain drivetrain, long milisecondsToDrive) {
     return new DriveStraight(drivetrain, millisecondsToDrive);
+  }
+
+  public static CommandBase driveStraightByDistance(Drivetrain drivetrain, double distanceToDrive) {
+    return new DriveStraightEncoder(drivetrain, distanceToDrive);
   }
 
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
-    autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
+    autonList.addOption("Drive Stright 5 sec.", driveStraightByTime(drivetrain, 5000));
+    autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 100000));
+    autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -100000));
     return autonList;
   }
+
 
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
   }
-}
+  }

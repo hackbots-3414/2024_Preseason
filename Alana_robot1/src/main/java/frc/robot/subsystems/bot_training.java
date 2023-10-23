@@ -9,15 +9,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Drivetrain extends SubsystemBase {
+public class bot_training extends SubsystemBase {
   private WPI_TalonFX motorFrontLeft = new WPI_TalonFX(10);
   private WPI_TalonFX motorBackLeft = new WPI_TalonFX(11);
   private WPI_TalonFX motorFrontRight = new WPI_TalonFX(13);
-  private WPI_TalonFX motorBackRight = new WPI_TalonFX(14);
+  private WPI_TalonFX motorBackRight = new WPI_TalonFX (14);
   private DifferentialDrive differentialDrive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
 
-  /** Creates a new Drivetrain. */
-  public Drivetrain() {
+  /** Creates a new bot_training. */
+  public bot_training() {
     motorBackLeft.follow(motorFrontLeft);
     motorBackRight.follow(motorFrontRight);
 
@@ -29,22 +29,15 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     motorFrontLeft.feed();
-    motorFrontRight.feed();
     motorBackLeft.feed();
+    motorFrontRight.feed();
     motorBackRight.feed();
   }
 
+  /**
+   * Tell the Robot ro move
+   */
   public void drive(double xSpeed, double zRotation) {
     differentialDrive.arcadeDrive(xSpeed, zRotation);
-  }
-
-  public void autonDrive(double xSpeed, double zRotation) {
-    differentialDrive.arcadeDrive(xSpeed, zRotation, false);
-  }
-
-  public double getPosition() {
-    double average = (motorFrontLeft.getSelectedSensorPosition() + motorFrontRight.getSelectedSensorPosition()
-        + motorBackLeft.getSelectedSensorPosition() + motorBackRight.getSelectedSensorPosition()) / 4;
-    return average;
   }
 }

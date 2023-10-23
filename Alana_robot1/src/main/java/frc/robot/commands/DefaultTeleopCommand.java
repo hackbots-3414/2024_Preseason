@@ -7,16 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.bot_training;
 
 public class DefaultTeleopCommand extends CommandBase {
-  private CommandXboxController xboxController = null;
+  private CommandXboxController xboxcontroller = null;
   private Drivetrain drivetrain = null;
 
   /** Creates a new DefaultTeleopCommand. */
-  public DefaultTeleopCommand(CommandXboxController xboxController, Drivetrain drivetrain) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public DefaultTeleopCommand(CommandXboxController xboxcontroller, Drivetrain drivetrain) {
     addRequirements(drivetrain);
-    this.xboxController = xboxController;
+    this.xboxcontroller = xboxcontroller;
     this.drivetrain = drivetrain;
   }
 
@@ -27,7 +27,8 @@ public class DefaultTeleopCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(xboxController.getLeftY(), xboxController.getRightX());
+    System.out.println("Execute");
+    drivetrain.drive(xboxcontroller.getLeftY(), xboxcontroller.getRightX());
   }
 
   // Called once the command ends or is interrupted.

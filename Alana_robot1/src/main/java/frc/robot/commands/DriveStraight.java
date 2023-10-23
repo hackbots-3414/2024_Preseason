@@ -16,7 +16,7 @@ public class DriveStraight extends CommandBase {
   public DriveStraight(Drivetrain drivetrain, long timeToDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
-    this.drivetrain = drivetrain;
+    this.drivetrain= drivetrain;
     this.timeToDrive = timeToDrive;
   }
 
@@ -29,18 +29,22 @@ public class DriveStraight extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.autonDrive(0.3, 0);
+    drivetrain.drive(0.3,0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.drive(0, 0);
+    drivetrain.drive(0,0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (System.currentTimeMillis() - startTime  < timeToDrive);
+     if(System.currentTimeMillis() - startTime < timeToDrive) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
