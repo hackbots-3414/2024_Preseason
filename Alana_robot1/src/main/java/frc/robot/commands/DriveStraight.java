@@ -5,38 +5,46 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Drivetrain;
 
-public class DefaultTeleopCommand extends CommandBase {
-  private CommandXboxController xboxController = null;
+public class DriveStraight extends CommandBase {
   private Drivetrain drivetrain = null;
+  private long timeToDrive = 0;
+  private long startTime = 0;
 
-  /** Creates a new DefaultTeleopCommand. */
-  public DefaultTeleopCommand(CommandXboxController xboxController, Drivetrain drivetrain) {
+  /** Creates a new DriveStraight. */
+  public DriveStraight(Drivetrain drivetrain, long timeToDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
-    this.xboxController = xboxController;
-    this.drivetrain = drivetrain;
+    this.drivetrain= drivetrain;
+    this.timeToDrive = timeToDrive;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    startTime = System.currentTimeMillis();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(xboxController.getLeftY(), xboxController.getRightX());
+    drivetrain.drive(0.3,0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    drivetrain.drive(0,0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+     if(System.currentTimeMillis() - startTime < timeToDrive) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

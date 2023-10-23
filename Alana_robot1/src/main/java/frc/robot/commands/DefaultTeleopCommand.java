@@ -5,41 +5,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.bot_training;
 
-public class DriveStraightEncoder extends CommandBase {
+public class DefaultTeleopCommand extends CommandBase {
+  private CommandXboxController xboxcontroller = null;
   private Drivetrain drivetrain = null;
-  private double distance = 0;
-  private double startPosition = 0;
-  /** Creates a new DriveStraightEncoder. */
-  public DriveStraightEncoder(Drivetrain drivetrain, double distanceToDrive) {
-    // Use addRequirements() here to declare subsystem dependencies.
+
+  /** Creates a new DefaultTeleopCommand. */
+  public DefaultTeleopCommand(CommandXboxController xboxcontroller, Drivetrain drivetrain) {
     addRequirements(drivetrain);
+    this.xboxcontroller = xboxcontroller;
     this.drivetrain = drivetrain;
-    this.distance = distance;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    startPosition = drivetrain.getPosition();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.autonDrive(0.3, 0);
+    System.out.println("Execute");
+    drivetrain.drive(xboxcontroller.getLeftY(), xboxcontroller.getRightX());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    drivetrain.autonDrive(0, 0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (drivetrain.getPosition() - startPosition >= distance);
+    return false;
   }
 }
