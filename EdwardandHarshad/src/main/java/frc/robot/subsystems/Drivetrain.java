@@ -23,9 +23,14 @@ public class Drivetrain extends SubsystemBase {
 
     motorFrontRight.setInverted(true);
     motorBackRight.setInverted(true);
+
+    motorFrontLeft.setSelectedSensorPosition(0, 0, 20);
+    motorBackLeft.setSelectedSensorPosition(0, 0, 20);
+    motorFrontRight.setSelectedSensorPosition(0, 0, 20);
+    motorBackRight.setSelectedSensorPosition(0, 0, 20);
   }
 
-  @Override
+  @Override 
   public void periodic() {
     // This method will be called once per scheduler run
     motorFrontLeft.feed();
