@@ -23,6 +23,11 @@ public class Drivetrain extends SubsystemBase {
 
     motorFrontRight.setInverted(true);
     motorBackRight.setInverted(true);
+
+    motorFrontLeft.setSelectedSensorPosition(0, 0, 20);
+    motorBackLeft.setSelectedSensorPosition(0, 0, 20);
+    motorFrontRight.setSelectedSensorPosition(0, 0, 20);
+    motorBackRight.setSelectedSensorPosition(0, 0, 20);
   }
 
   @Override
@@ -42,10 +47,8 @@ public class Drivetrain extends SubsystemBase {
     differentialDrive.arcadeDrive(xSpeed, zRotation, false);
   }
 
-  public double getpostition() {
-    double average = (motorFrontLeft.getSelectedSensorPosition() + motorFrontRight.getSelectedSensorPosition()
-        + motorBackLeft.getSelectedSensorPosition() + motorBackRight.getSelectedSensorPosition()) / 4;
-    return average;
-
+  public double getPosition() {
+    return (motorFrontLeft.getSelectedSensorPosition() + motorBackLeft.getSelectedSensorPosition()
+        + motorFrontRight.getSelectedSensorPosition() + motorBackRight.getSelectedSensorPosition()) / 4;
   }
 }

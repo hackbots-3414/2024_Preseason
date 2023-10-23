@@ -22,10 +22,15 @@ public final class Autos {
     return new DriveStraight(drivetrain, millisecondsToDrive);
   }
 
+  public static CommandBase driveStraightByDistance(Drivetrain drivetrain, double distancetoDrive) {
+    return new DriveStraightEncoder(drivetrain, distancetoDrive);
+  }
+
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
     autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
+    autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 100000));
     return autonList;
   }
 
