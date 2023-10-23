@@ -5,14 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DriveTrain;
 
 public class DriveStraight extends CommandBase {
   /** Creates a new DriveStraight. */
-  private Drivetrain drivetrain = null;
+  private DriveTrain drivetrain = null;
   private long timeToDrive = 0;
   private long startTime = 0;
-  public DriveStraight(Drivetrain drivetrain, long timeToDrive) {
+  public DriveStraight(DriveTrain drivetrain, long timeToDrive) {
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.timeToDrive = timeToDrive;

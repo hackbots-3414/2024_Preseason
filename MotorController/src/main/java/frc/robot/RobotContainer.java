@@ -8,7 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DefaultTeleop;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 
 import javax.swing.table.DefaultTableCellRenderer;
@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Drivetrain drivetrain = new Drivetrain();
+  private final DriveTrain drivetrain = new DriveTrain();
   private DefaultTeleop defaultTeleop = null;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed

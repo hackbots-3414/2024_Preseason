@@ -6,13 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DriveTrain;
 
 public class DefaultTeleop extends CommandBase {
   /** Creates a new defaultTeleop. */
   private CommandXboxController xboxController;
-  private Drivetrain driveTrain;
-  public DefaultTeleop(CommandXboxController m_driverController, Drivetrain driveTrain) {
+  private DriveTrain driveTrain;
+  public DefaultTeleop(CommandXboxController m_driverController, DriveTrain driveTrain) {
     addRequirements(driveTrain);
     this.xboxController = m_driverController;
     this.driveTrain = driveTrain;
