@@ -17,14 +17,19 @@ public final class Autos {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
   }
 
-public static CommandBase driveStraight(Drivetrain drivetrain) {
-  return new DriveStraight(drivetrain, 5000);
+public static CommandBase driveStraight(Drivetrain drivetrain, long millisecondsToDrive) {
+  return new DriveStraight(drivetrain, millisecondsToDrive);
+}
+
+public static CommandBase driveStraightByDistance(Drivetrain drivetrain, double distanceToDrive) {
+  return new DriveStraightEncoder(drivetrain, distanceToDrive);
 }
 
 public static SendableChooser getAutoChooser(Drivetrain drivetrain) {
   SendableChooser chooser = new SendableChooser<>();
   chooser.setDefaultOption("5 sec no-op", new WaitCommand(5));
-  chooser.addOption("Drive Straight 5 sec", driveStraight(drivetrain));
+  chooser.addOption("Drive Straight 5 sec", driveStraight(drivetrain, 5000));
+  chooser.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 100000));
   return chooser;
 }
 
