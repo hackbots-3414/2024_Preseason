@@ -16,14 +16,18 @@ public final class Autos {
   public static CommandBase exampleAuto(ExampleSubsystem subsystem) {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
   }
-  public static CommandBase driveStraight(DriveTrain driveTrain) {
-    return new DriveStraight(driveTrain, 5000);
+  public static CommandBase driveStraightByTime(DriveTrain driveTrain, long millisecondsToDrive) {
+    return new DriveStraight(driveTrain, millisecondsToDrive);
   }
-  public static SendableChooser getAutonChooser(DriveTrain driveTrain) {
-    SendableChooser chooser = new SendableChooser<>();
-    chooser.setDefaultOption("S sec no-op", new WaitCommand(5));
-    chooser.addOption("Drive Straight 5 sec", driveStraight(driveTrain));
-    return chooser;
+  public static CommandBase driveStraightByDistance(DriveTrain driveTrain, long distanceToDrive) {
+    return new DriveStraight(driveTrain, distanceToDrive);
+  }
+  public static SendableChooser buildAutonPicker(DriveTrain driveTrain) {
+    SendableChooser autonList = new SendableChooser<>();
+    autonList.setDefaultOption("Do Nothing", new WaitCommand(5));
+    autonList.addOption("Drive Straight 5 sec", driveStraightByTime(driveTrain, 5000));
+    autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(driveTrain, 100000));
+    return autonList;
   }
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class");
