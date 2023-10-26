@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
@@ -24,7 +25,7 @@ public class Drivetrain extends SubsystemBase {
     motorFrontRight.setInverted(true);
     motorBackRight.setInverted(true);
 
-    motorFrontLeft.setSelectedSensorPosition(0, 0, 20);
+    motorFrontLeft.setSelectedSensorPosition(0, 0, 20); 
     motorBackLeft.setSelectedSensorPosition(0, 0, 20);
     motorFrontRight.setSelectedSensorPosition(0, 0, 20);
     motorBackRight.setSelectedSensorPosition(0, 0, 20);
@@ -37,6 +38,8 @@ public class Drivetrain extends SubsystemBase {
     motorFrontRight.feed();
     motorBackLeft.feed();
     motorBackRight.feed();
+    SmartDashboard.putNumber("Encoder Average: ", getPosition());
+    SmartDashboard.putNumber("Left Front Position ", motorFrontLeft.getSelectedSensorPosition());
   }
 
   public void drive(double xSpeed, double zRotation) {

@@ -24,12 +24,19 @@ public class DriveStraightEncoder extends CommandBase {
   @Override
   public void initialize() {
     startPos = drivetrain.getPosition();
+    System.out.println("initialize: startPos = " + startPos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (distanceToDrive < 0) {
+      drivetrain.autonDrive(-0.3, 0);
+    } else {
+      drivetrain.autonDrive(0.3, 0);
+    }
     drivetrain.autonDrive(0.3, 0);
+    System.out.println("execute");
   }
 
   // Called once the command ends or is interrupted.
@@ -41,7 +48,13 @@ public class DriveStraightEncoder extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-      return drivetrain.getPosition() - startPos >= distanceToDrive;
+    System.out.println("isFinished(): drivetrain.getPosition(): " + drivetrain.getPosition() + ", startPos: " + startPos
+        + ", distancetoDrive: " + distanceToDrive);
+    System.out.println("isFinished(): " + (drivetrain.getPosition() - startPos >= distanceToDrive));
+    
+    if (distanceToDrive < 0) {
+      return drivetrain.getPosition() - 0 < distanceToDrive;
+    }
+    return drivetrain.getPosition() - startPos >= distanceToDrive;
   }
 }
- 
