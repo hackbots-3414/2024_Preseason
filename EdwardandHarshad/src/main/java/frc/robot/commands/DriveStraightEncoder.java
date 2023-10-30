@@ -5,6 +5,8 @@
 package frc.robot.commands;
 import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Constants.DriveStraightConstants;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveStraightEncoder extends CommandBase {
@@ -31,11 +33,10 @@ public class DriveStraightEncoder extends CommandBase {
   @Override
   public void execute() {
     if(distancetoDrive < 0){
-      drivetrain.autonDrive(-0.3, 0);
+      drivetrain.autonDrive(-DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
     }else{
-      drivetrain.autonDrive(0.3,0);
+      drivetrain.autonDrive(DriveStraightConstants.DRIVE_STRAIGHT_SPEED,0);
     }
-
     System.out.println("execute");
   }
 
