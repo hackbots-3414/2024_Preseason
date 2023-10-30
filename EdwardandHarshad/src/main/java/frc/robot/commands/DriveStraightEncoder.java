@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.Constants;
+import frc.robot.Constants.DriveStraightConstants;
 
 public class DriveStraightEncoder extends CommandBase {
   private Drivetrain drivetrain = null;
@@ -31,9 +33,9 @@ public class DriveStraightEncoder extends CommandBase {
   @Override
   public void execute() {
     if (distanceToDrive < 0) {
-      drivetrain.autonDrive(-0.3, 0);
+      drivetrain.autonDrive(-DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
     } else {
-      drivetrain.autonDrive(0.3, 0);
+      drivetrain.autonDrive(DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
     }
     System.out.println("execute");
   }
