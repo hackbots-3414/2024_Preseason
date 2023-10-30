@@ -6,8 +6,8 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj.shuffleboard.SendableCameraWrapper;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -18,15 +18,21 @@ public final class Autos {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
   }
 
-  public static CommandBase driveStraight(Drivetrain drivetrain) {
-    return new DriveStraight(null, 5000);
+  public static CommandBase driveStraightByTime(Drivetrain drivetrain, long millisecondsToDrive) {
+    return new DriveStraight(drivetrain, millisecondsToDrive);
   }
 
-  public static SendableChooser getAutonChooser(Drivetrain drivetrain) {
-     SendableChooser chooser = new SendableChooser<>();
-     chooser.setDefaultOption("Five sec no op", new WaitCommand(5));
-     chooser.addOption("Five sec drive straight", new DriveStraight(drivetrain, 5000));
-     return chooser;
+  public static CommandBase driveStraightByDistance(Drivetrain drivetrain, double distanceToDrive) {
+    return new DriveStraightEncoder(drivetrain, distanceToDrive);
+  }
+
+  public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
+    SendableChooser<Command> autonList = new SendableChooser<>();
+    autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
+    autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
+    autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 100000));
+    autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -100000));
+    return autonList;
   }
 
   private Autos() {
