@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX motorFrontLeft = new WPI_TalonFX(10);
@@ -37,6 +38,9 @@ public class Drivetrain extends SubsystemBase {
     motorFrontRight.feed();
     motorBackLeft.feed();
     motorBackRight.feed();
+    SmartDashboard.putNumber("Encoder Average: " , getPosition());
+    SmartDashboard.putNumber("Left Front Position: " , motorFrontLeft.getSelectedSensorPosition());
+
   }
 
   public void drive(double xSpeed, double zRotation) {
