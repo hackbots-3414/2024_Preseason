@@ -12,18 +12,20 @@ public class DriveStraightEncoder extends CommandBase {
   private Drivetrain drivetrain = null;
   private double distance = 0;
   private double startPos = 0;
-    /** Creates a new DriveStraightEncoder. */
-  public DriveStraightEncoder(Drivetrain drivetrain, double distance) {
+    
+  /** Creates a new DriveStraightEncoder. */
+  public DriveStraightEncoder(Drivetrain drivetrain, double distanceToDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
-    this.distance = distance;
+    this.distance = distanceToDrive;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     startPos = drivetrain.getPosition();
+    System.out.println("initialize: startPos = " + startPos);
   }
 
   
