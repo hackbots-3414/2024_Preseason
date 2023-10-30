@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.Constants.DriveStraightConstants;
 
 public class DriveStraightEncoder extends CommandBase {
   private Drivetrain drivetrain = null;
@@ -25,10 +26,17 @@ public class DriveStraightEncoder extends CommandBase {
     startPos = drivetrain.getPosition();
   }
 
+  
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.autonDrive(0.3, 0);
+    if (distance < 0) {
+      drivetrain.autonDrive(-DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
+    } else {
+      drivetrain.autonDrive(DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
+    }
+    System.out.println("execute");
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +48,13 @@ public class DriveStraightEncoder extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (drivetrain.getPosition()-startPos >= distance);
+    System.out.println("isFinished(): drivetrain.getPosition(): " + drivetrain.getPosition() + ", startPos: " + startPos
+    + ", distanceToDrive: " + distance);
+    System.out.println("isFinished(): " + (drivetrain.getPosition() - startPos >= distance));
+
+    if (distance < 0) {
+      return drivetrain.getPosition() - startPos < distance;
+    }
+    return drivetrain.getPosition() - startPos >= distance;
   }
-}
+  }

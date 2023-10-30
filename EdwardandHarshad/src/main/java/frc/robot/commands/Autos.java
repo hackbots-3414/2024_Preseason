@@ -22,14 +22,22 @@ public final class Autos {
     return new DriveStraight(drivetrain, millisecondsToDrive);
   }
 
+  public static CommandBase driveStraightByDistance(Drivetrain drivetrain, double distanceToDrive) {
+    return new DriveStraightEncoder(drivetrain, distanceToDrive);
+  }
+
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
     autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
+    autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 100000));
+    autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -100000));
+    Command outAndBack = driveStraightByDistance(drivetrain, 5000).andThen(driveStraightByDistance(drivetrain, -5000));
+    autonList.addOption("Out and Back 50k", outAndBack);
     return autonList;
   }
   
   private Autos() {
-    throw new UnsupportedOperationException("This is a utility class!");
+    throw new UnsupportedOperationException("This is a utility class!");           
   }
 }
