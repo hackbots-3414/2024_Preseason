@@ -16,4 +16,18 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class DriveStraightConstants {
+    public static final double DRIVE_STRAIGHT_SPEED = 0.3;
+  }
+
+  private static double inches;
+  public static String inchesToTicks;
+
+  public static double inchesToTicks(double meters) {
+    double gearbox = 9.4;
+    double rotations = inches / Math.PI / 6.25;
+    return rotations * gearbox * 2048;
+    
+  }
 }

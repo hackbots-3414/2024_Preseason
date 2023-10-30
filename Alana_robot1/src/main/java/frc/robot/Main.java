@@ -20,6 +20,9 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
+    System.out.println("51 inches is " + Constants.inchesToTicks(51));
+    System.out.println("106 inches is " + Constants.inchesToTicks(106));
+
     RobotBase.startRobot(Robot::new);
   }
 }
