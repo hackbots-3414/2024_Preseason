@@ -27,6 +27,7 @@ public final class Autos {
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5));
     autonList.addOption("Drive Straight 5 sec", driveStraightByTime(driveTrain, 5000));
     autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(driveTrain, 100000));
+    autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(driveTrain, -100000));
     return autonList;
   }
   private Autos() {

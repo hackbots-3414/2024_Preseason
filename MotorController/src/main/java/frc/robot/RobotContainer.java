@@ -44,6 +44,8 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(defaultTeleop);
     // Configure the trigger bindings
     configureBindings();
+    SmartDashboard.putData("Auton Choice", Autos.buildAutonPicker(drivetrain));
+    System.out.println("RobotContainer() putData to Smart Dashboard");
   }
 
   /**
@@ -72,6 +74,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return(Command) ((SendableChooser) SmartDashboard.getData("Auton")).getSelected();
+    return(Command) ((SendableChooser) SmartDashboard.getData("Auton Choice")).getSelected();
   }
 }

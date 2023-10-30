@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
 
-  private WPI_TalonFX motorFrontLeft;
-  private WPI_TalonFX motorBackLeft;
-  private WPI_TalonFX motorFrontRight;
-  private WPI_TalonFX motorBackRight;
+  private WPI_TalonFX motorFrontLeft = new WPI_TalonFX(10);
+  private WPI_TalonFX motorBackLeft = new WPI_TalonFX(11);
+  private WPI_TalonFX motorFrontRight = new WPI_TalonFX(13);
+  private WPI_TalonFX motorBackRight = new WPI_TalonFX(14);
 
   private DifferentialDrive differentialDrive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
 
@@ -35,7 +35,7 @@ public class DriveTrain extends SubsystemBase {
     motorBackRight.feed();
   }
 
-  public void drive(double xSpeed, double zRotation) {
+  public void autonDrive(double xSpeed, double zRotation) {
     differentialDrive.arcadeDrive(xSpeed, zRotation);
   }
   public double getPosition() {

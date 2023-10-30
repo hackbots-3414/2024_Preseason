@@ -5,33 +5,57 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Constants.DriveStraightConstants;
 import frc.robot.subsystems.DriveTrain;
 
 public class DriveStraightEncoder extends CommandBase {
+  private DriveTrain drivetrain = null;
+  private double distanceToDrive = 0.0;
+  private double startPos = 0.0;
+
   /** Creates a new DriveStraightEncoder. */
-  public DriveStraightEncoder() {
+  public DriveStraightEncoder(DriveTrain drivetrain, double distanceToDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(drivetrain);
+    this.drivetrain = drivetrain;
+    this.distanceToDrive = distanceToDrive;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    startPos = drivetrain.getPosition();
+    System.out.println("initialize: startPos = " + startPos);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    DriveTrain.autonDrive(0.3,0);
+    if (distanceToDrive < 0) {
+      drivetrain.autonDrive(-Constants.DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
+    } else {
+      drivetrain.autonDrive(Constants.DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
+    }
+    System.out.println("execute");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    DriveTrain.autonDrive(0,0);
+    drivetrain.autonDrive(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return DriveTrain.getPosition() - startPos >= distanceToDrive;
+    System.out.println("isFinished(): drivetrain.getPosition(): " + drivetrain.getPosition() + ", startPos: " + startPos
+        + ", distanceToDrive: " + distanceToDrive);
+    System.out.println("isFinished(): " + (drivetrain.getPosition() - startPos >= distanceToDrive));
+
+    if (distanceToDrive < 0) {
+      return drivetrain.getPosition() - startPos < distanceToDrive;
+    }
+    return drivetrain.getPosition() - startPos >= distanceToDrive;
   }
 }
