@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveStraightConstants;
 import frc.robot.subsystems.Drivetrain;
 
@@ -14,11 +15,11 @@ public class DriveStraightEncoder extends CommandBase {
   private double startPos = 0.0;
 
   /** Creates a new DriveStraightEncoder. */
-  public DriveStraightEncoder(Drivetrain drivetrain, double distanceToDrive) {
+  public DriveStraightEncoder(Drivetrain drivetrain, double inchesToDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
-    this.distanceToDrive = distanceToDrive;
+    this.distanceToDrive = Constants.inchesToTicks(inchesToDrive);
   }
 
   // Called when the command is initially scheduled.

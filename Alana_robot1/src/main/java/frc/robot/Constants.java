@@ -25,9 +25,21 @@ public final class Constants {
   public static String inchesToTicks;
 
   public static double inchesToTicks(double meters) {
-    double gearbox = 9.4;
+    // 74 inches = 86146 ticks
+    // 74 / Math.PI / 6.25 = 3.77 rotations * 2048 ticks = 7718
+    // gearbox = 86146 / 7718 = 11.16
+    // double gearbox = 0.4;
+    // 113 inches = 134895
+    // 113 / Math.PI / 6.25 = 5.755 rotations * 2048 ticks = 11786
+    //gearbox = 134895 / 11786 = 11.45
+    double gearbox = 11.3;
     double rotations = inches / Math.PI / 6.25;
     return rotations * gearbox * 2048;
-    
+  }
+  public static double ticksToInches(double ticks) {
+
+    double gearbox1 = 11.3;
+
+    return (ticks / gearbox1 / 2048) * (6.25 * Math.PI);
   }
 }
