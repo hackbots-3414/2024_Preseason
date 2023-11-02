@@ -36,8 +36,8 @@ public final class Autos {
     autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
     autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 100000));
     autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -100000));
-    Command outAndBack = driveStraightByDistance(drivetrain , 50000) .andThen(driveStraightByDistance(drivetrain,-50000));
-    autonList.addOption("Out and ack 50k", outAndBack);
+    Command outAndBack = driveStraightByDistance(drivetrain , 74) .andThen(driveStraightByDistance(drivetrain,-74));
+    autonList.addOption("Out and Back 50k", outAndBack);
     return autonList;
   }
 
