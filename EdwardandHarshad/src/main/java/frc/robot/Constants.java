@@ -21,4 +21,10 @@ public final class Constants {
     public static final double DRIVE_STRAIGHT_SPEED = 0.3;
   }
 
+  public static double inchesToTicks (double inches){
+    // before gearbox was 9.4
+    double gearbox = 11.16;
+    double rotations = inches / Math.PI / 6.25;
+    return rotations * gearbox * 2048;
+  }
 }
