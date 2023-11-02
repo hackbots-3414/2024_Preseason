@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveStraightConstants;
 
 public class DriveStraightEncoder extends CommandBase {
@@ -14,11 +15,11 @@ public class DriveStraightEncoder extends CommandBase {
   private double startPos = 0;
     
   /** Creates a new DriveStraightEncoder. */
-  public DriveStraightEncoder(Drivetrain drivetrain, double distanceToDrive) {
+  public DriveStraightEncoder(Drivetrain drivetrain, double inchesToDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
-    this.distance = distanceToDrive;
+    this.distance = Constants.inchesToTicks(inchesToDrive);
   }
 
   // Called when the command is initially scheduled.
@@ -28,8 +29,6 @@ public class DriveStraightEncoder extends CommandBase {
     System.out.println("initialize: startPos = " + startPos);
   }
 
-  
-  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -59,4 +58,4 @@ public class DriveStraightEncoder extends CommandBase {
     }
     return drivetrain.getPosition() - startPos >= distance;
   }
-  }
+}

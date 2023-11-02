@@ -16,7 +16,23 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
   public static class DriveStraightConstants {
     public static final double DRIVE_STRAIGHT_SPEED = 0.3;
+  }
+  // Encoder Avg: 134,895 ticks
+  // Distance traveled: 113 in.
+  
+  public static double inchesToTicks(double inches) {
+    double gearbox = 11.3;
+    double rotations = inches / Math.PI / 6.25;
+    return rotations * gearbox * 2048;
+  }
+
+
+  public static double ticksToInches(double ticks) {
+   double gearbox1 = 11.3;
+
+    return (ticks / gearbox1 / 2048) * (6.25 * Math.PI);
   }
 }
