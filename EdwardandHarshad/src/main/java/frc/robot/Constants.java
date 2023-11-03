@@ -22,8 +22,13 @@ public final class Constants {
   }
 
   public static double inchesToTicks(double inches) {
-    double gearbox = 9.4;
+    double gearbox = 11.3;
     double rotations = inches / Math.PI / 6.25;
     return rotations * gearbox * 2048;
+  }
+
+  public static double ticksToInches(double ticks) {
+    double gearbox = 11.3;
+    return (ticks / gearbox / 2048) * (Math.PI * 6.25);
   }
 }
