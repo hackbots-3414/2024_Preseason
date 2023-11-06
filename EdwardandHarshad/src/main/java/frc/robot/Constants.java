@@ -20,4 +20,23 @@ public final class Constants {
   public static class DriveStraightConstants {
     public static final double DRIVE_STRAIGHT_SPEED = 0.3;
   }
+
+  public static double inchesToTicks(double inches) {
+    // 74 inches = 86146 ticks
+    // 74 / Math.PI / 6.25 = 3.77 rotations * 2048 ticks = 7718 ticks
+    // gearbox = 86146 / 7718 = 11.16
+    // double gearbox = 9.4;
+    // 113 inches = 134895
+    // 113 / Math.PI / 6.25 = 5.755 rotations * 2048 ticks = 11786
+    // gearbox = 134895 / 11786 = 11.45
+    double gearbox = 11.3;
+    double rotations = inches / Math.PI / 6.25;
+    return rotations * gearbox * 2048;
+  }
+  
+  public static double ticksToInches(double ticks) {
+    double gearbox = 11.3;
+    return (ticks / gearbox / 2048) * (6.25 * Math.PI);
+  }
+
 }
