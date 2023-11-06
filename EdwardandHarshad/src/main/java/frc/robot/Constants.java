@@ -34,6 +34,11 @@ public final class Constants {
     return rotations * gearbox * 2048;
   }
 
+  /**
+   * Inverse of inchesToTicks()
+   * @param ticks
+   * @return
+   */
   public static double ticksToInches(double ticks) {
 
     double gearbox = 11.3; 
