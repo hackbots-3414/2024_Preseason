@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -13,6 +15,10 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  static {
+    SmartDashboard.putNumber("Gearbox Ratio", 11.3);
+  }
+  public static double GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", 11.3);
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
@@ -29,9 +35,9 @@ public final class Constants {
     // 113 inches = 134895
     // 113 / Math.PI / 6.25 = 5.755 rotations * 2048 ticks = 11786
     // gearbox = 134895 / 11786 = 11.45
-    double gearbox = 11.3;
     double rotations = inches / Math.PI / 6.25;
-    return rotations * gearbox * 2048;
+    GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", GEARBOX);
+    return rotations * GEARBOX * 2048;
   }
 
   /**
@@ -40,8 +46,8 @@ public final class Constants {
    * @return
    */
   public static double ticksToInches(double ticks) {
-
-    double gearbox = 11.3; 
+    GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", GEARBOX);
+    double gearbox = GEARBOX; 
 
     return (ticks / gearbox / 2048) * (6.25 * Math.PI);
   }
