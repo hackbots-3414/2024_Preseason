@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -13,17 +14,27 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  static{
+    SmartDashboard.putNumber("GearBox Ratio",11.3);
+  }
+  public static double GEARBOX = SmartDashboard.getNumber("GearBox Ratio", 11.3);
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  
 
   public static class DriveStraightConstants {
     public static final double DRIVE_STRAIGHT_SPEED = 0.35;
   }
 
   public static double inchesToTicks (double inches) {
-    double gearbox = 11.3;
     double rotations = inches/ Math.PI / 6.25;
-    return rotations  * gearbox * 2048;
+    GEARBOX = SmartDashboard.getNumber("GearBox Ratio" , GEARBOX);
+    return rotations  * GEARBOX * 2048;
+  }
+  public static double ticksToInches (double ticks) {
+    GEARBOX = SmartDashboard.getNumber("GearBox Ratio" , GEARBOX);
+    return (ticks / GEARBOX / 2048) * (6.25 * Math.PI);
   }
 }
