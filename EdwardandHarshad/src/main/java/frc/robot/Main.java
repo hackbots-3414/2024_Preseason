@@ -22,6 +22,8 @@ public final class Main {
   public static void main(String... args) {
     System.out.println("51 inches is " + Constants.inchesToTicks(51));
     System.out.println("106 inches is " + Constants.inchesToTicks(106));
+    System.out.println("24 inches to ticks: " + Constants.inchesToTicks(24) + "back to inches: " +
+    Constants.ticksToInches(Constants.inchesToTicks(24)));
     RobotBase.startRobot(Robot::new);
   }
 }
