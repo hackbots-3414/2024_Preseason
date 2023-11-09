@@ -4,18 +4,19 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
-  private WPI_TalonSRX motorFrontLeft = new WPI_TalonSRX(3);
-  private WPI_TalonSRX motorBackLeft = new WPI_TalonSRX(4);
-  private WPI_TalonSRX motorFrontRight = new WPI_TalonSRX(1);
-  private WPI_TalonSRX motorBackRight = new WPI_TalonSRX(2);
+  private WPI_TalonFX motorFrontLeft = new WPI_TalonFX(10);
+  private WPI_TalonFX motorBackLeft = new WPI_TalonFX(11);
+  private WPI_TalonFX motorFrontRight = new WPI_TalonFX(13);
+  private WPI_TalonFX motorBackRight = new WPI_TalonFX(14);
   private DifferentialDrive differentialDrive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
+  private AHRS navx = new AHRS();
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -53,5 +54,12 @@ public class Drivetrain extends SubsystemBase {
   public double getPosition() {
     return (motorFrontLeft.getSelectedSensorPosition() + motorBackLeft.getSelectedSensorPosition()
         + motorFrontRight.getSelectedSensorPosition() + motorBackRight.getSelectedSensorPosition()) / 4.0;
+  }
+
+  public double getTurnAngle() {
+    return navx.getYaw();
+  }
+  public void resetYaw() {
+    navx.reset();
   }
 }

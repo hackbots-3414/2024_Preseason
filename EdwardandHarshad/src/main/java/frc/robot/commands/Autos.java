@@ -22,18 +22,23 @@ public final class Autos {
     return new DriveStraight(drivetrain, millisecondsToDrive);
   }
 
-  public static CommandBase driveStraightByDistance(Drivetrain drivetrain, double distanceToDrive) {
+  public static CommandBase driveStraightByDistance(Drivetrain drivetrain, long distanceToDrive) {
     return new DriveStraightEncoder(drivetrain, distanceToDrive);
   }
-
+  public static CommandBase driveStraightByInches(Drivetrain drivetrain, long ticksToInches) {
+    return new DriveStraightEncoder(drivetrain, ticksToInches);
+  }
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
     autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
     autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 100000));
     autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -100000));
-    Command outAndBack = driveStraightByDistance(drivetrain, 50000).andThen(driveStraightByDistance(drivetrain, -50000));
+    Command outAndBack = driveStraightByDistance(drivetrain, 74).andThen(driveStraightByDistance(drivetrain, -74));
     autonList.addOption("Out and Back 50k", outAndBack);
+    Command DriveStraight100 = driveStraightByInches(drivetrain, 100);
+    autonList.addOption("Drive Straight 100 Inches", DriveStraight100);
+    
     return autonList;
   }
 
