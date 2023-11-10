@@ -9,28 +9,29 @@ import frc.robot.subsystems.Drivetrain;
 
 public class Turn extends CommandBase {
   private Drivetrain drivetrain = null;
-  private double degrees = 0;
+  private double targetAngleDegrees = 0;
 
   /** Creates a new Turn. */
   public Turn(Drivetrain drivetrain, double degrees) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
-    this.degrees = degrees;
+    this.targetAngleDegrees = degrees;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    drivetrain.resetYaw();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (degrees < 0) {
-      drivetrain.drive(0, -0.15);
+    if (targetAngleDegrees < 0) {
+      drivetrain.autonDrive(0, -0.15);
     } else {
-      drivetrain.drive(0, 0.15);
+      drivetrain.autonDrive(0, 0.15);
     }
   }
 
@@ -43,6 +44,8 @@ public class Turn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    double currentAngle = drivetrain.getTurnAngle();
+    return ((targetAngleDegrees > 0 && targetAngleDegrees - currentAngle <= 0) || 
+    (targetAngleDegrees < 0 && targetAngleDegrees - currentAngle >= 0));
   }
 }
