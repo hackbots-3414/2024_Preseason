@@ -57,11 +57,11 @@ public class Drivetrain extends SubsystemBase {
         + motorBackLeft.getSelectedSensorPosition() + motorBackRight.getSelectedSensorPosition()) / 4.0;
   }
   
-  public double getTurnAngle () {
+  public double getTurnAngle() {
     return navx.getYaw();
   }
 
   public void resetYaw() {
-    navx.reset();
+    navx.reset(); 
   }
 }
