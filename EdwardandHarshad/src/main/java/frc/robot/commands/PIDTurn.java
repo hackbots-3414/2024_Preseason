@@ -44,6 +44,6 @@ public class PIDTurn extends PIDCommand {
   }
 
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return getController().atSetpoint(); 
   }
 }
