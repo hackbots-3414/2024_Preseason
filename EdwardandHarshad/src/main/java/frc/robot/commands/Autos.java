@@ -26,14 +26,21 @@ public final class Autos {
     return new DriveStraightEncoder(drivetrain, distanceToDrive);
   }
 
+  public static CommandBase turn(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new Turn(drivetrain, targetAngleDegrees);
+  }
+
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
     autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
     autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 113));
     autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -113));
+    autonList.addOption("Drive 100 inches", driveStraightByDistance(drivetrain, 100));
     Command outAndBack = driveStraightByDistance(drivetrain, 74).andThen(driveStraightByDistance(drivetrain, -74));
     autonList.addOption("Out and Back 50k", outAndBack);
+    autonList.addOption("Turn 90", turn(drivetrain, 90));
+    autonList.addOption("Turn -90", turn(drivetrain, -90));
     return autonList;
   }
 
