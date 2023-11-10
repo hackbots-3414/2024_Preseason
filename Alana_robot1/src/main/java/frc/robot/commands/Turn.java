@@ -15,7 +15,7 @@ public class Turn extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
-    this.targetAngleDegrees = targetAngleDegrees = 0;
+    this.targetAngleDegrees = targetAngleDegrees;
   }
 
 
