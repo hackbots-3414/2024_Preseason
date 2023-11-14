@@ -18,8 +18,6 @@ public class Turn extends CommandBase {
     this.targetAngleDegrees = targetAngleDegrees;
   }
 
-
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {

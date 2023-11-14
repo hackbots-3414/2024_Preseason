@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,9 +20,9 @@ public class PIDTurn extends PIDCommand {
   public PIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
     super(
         // The controller that the command will use
-        new PIDController(0.3, 0, 0),
+        new PIDController(0.00655, 0, 0),
         // This should return the measurement
-        drivetrain:: getTurnAngle,
+        drivetrain::getTurnAngle,
         // This should return the setpoint (can also be a constant)
         () -> targetAngleDegrees,
         // This uses the output
@@ -30,6 +31,7 @@ public class PIDTurn extends PIDCommand {
           // we may need to check output and clamp it to a low speed
           //see
           //
+        output = MathUtil.clamp(output, -0.2, 0.2);
           drivetrain.autonDrive(0, output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
@@ -41,8 +43,8 @@ public class PIDTurn extends PIDCommand {
     //We'll never be at exactly our measurement
     getController().setTolerance(2);
     SmartDashboard.putData("PIDTurn Controller", getController());
-    
   }
+
 @Override
 public void initialize() {
   super.initialize();
