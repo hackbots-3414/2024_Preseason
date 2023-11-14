@@ -30,6 +30,16 @@ public final class Autos {
     return new Turn(drivetrain, targetAngleDegrees);
   }
 
+  public static CommandBase createPIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new PIDTurn(drivetrain, targetAngleDegrees);
+  }
+
+  public static CommandBase createHealthToPhysicsAndBackAgain(Drivetrain drivetrain)
+  {
+    // FIXME implement this sequence, replacing the WaitCommand
+    return new WaitCommand(10);
+  }
+
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
@@ -40,6 +50,9 @@ public final class Autos {
     autonList.addOption("Out and Back 50k", outAndBack);
     autonList.addOption("Turn 90", turn(drivetrain, 90));
     autonList.addOption("Turn -90", turn(drivetrain, -90));
+    autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, 90));
+    autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, -90));
+    autonList.addOption("There and Back Again", createHealthToPhysicsAndBackAgain(drivetrain));
     return autonList;
   }
 
