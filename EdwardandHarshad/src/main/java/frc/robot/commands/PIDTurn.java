@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -30,6 +31,7 @@ public class PIDTurn extends PIDCommand {
           //we may need to check output and clamp it to a low speed
           // see
           // https://docs.wpilb.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html
+          output = MathUtil.clamp(output, -0.2, 0.2);
           drivetrain.autonDrive(0, output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
@@ -37,9 +39,9 @@ public class PIDTurn extends PIDCommand {
     this.drivetrain = drivetrain;
     // Configure additional PID options by calling `getController` here.
     //Gyro will return between -180 and +180
-    getController().enableContinuousInput(-180, 180)
+    getController().enableContinuousInput(-180, 180);
     // We'll never be at exactly our measurment, so hot close is that close enough?
-    getClass().setTolerance(2)
+    getController().setTolerance(2);
     SmartDashboard.putData("PIDTurn Controller", getController());
   }
 
@@ -52,6 +54,12 @@ public class PIDTurn extends PIDCommand {
     */
     @Override
     public void initialize() {
+      // make sure the parent gets to do their tasks. If we don't
+      // call super.initialize(), that logic won't run, and other
+      // parts of this class will fail.
+      super.initialize();
+      drivetrain.resetYaw();
+      getController().reset();
       
     }
   // Returns true when the command should end.
