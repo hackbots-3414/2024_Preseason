@@ -40,8 +40,19 @@ public final class Autos {
 
   public static CommandBase createHealthToPhysicsAndBackAgain(Drivetrain drivetrain)
   {
-    //FiXME implement this sequence, replacing the WaitCommand
-    return new WaitCommand(10);
+  return new DriveStraightEncoder(drivetrain, 176).andThen(
+    new Turn(drivetrain, -45),
+    new DriveStraightEncoder(drivetrain, 156),
+    new Turn(drivetrain, -45),
+    new DriveStraightEncoder(drivetrain, 120),
+    new Turn(drivetrain, -90),
+    new DriveStraightEncoder(drivetrain, 105),
+    new Turn(drivetrain, -90),
+    new DriveStraightEncoder(drivetrain, 125),
+    new Turn(drivetrain, 45),
+    new DriveStraightEncoder(drivetrain, 100),
+    new Turn(drivetrain, 45),
+    new DriveStraightEncoder(drivetrain, 156));
   }
 
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
