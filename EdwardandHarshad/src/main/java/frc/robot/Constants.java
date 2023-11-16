@@ -22,7 +22,7 @@ public final class Constants {
   }
 
   public static double inchesToTicks (double inches){
-    // before gearbox was 9.4
+    // before gearbox was
     double gearbox = 11.16;
     double rotations = inches / Math.PI / 6.25;
     return rotations * gearbox * 2048;
