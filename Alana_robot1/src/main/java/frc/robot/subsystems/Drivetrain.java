@@ -44,6 +44,7 @@ public class Drivetrain extends SubsystemBase {
 
 
     public void autonDrive(double xSpeed, double zRotation) {
+        System.out.println("auton drive" + xSpeed);
         differentialDrive.arcadeDrive(xSpeed, zRotation, false);
     }
     public double getPosition() {

@@ -68,6 +68,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
  //   return Autos.exampleAuto(m_exampleSubsystem);
-    return (Command) ((SendableChooser) SmartDashboard.getData("Auton")).getSelected();
+    Command auto = (Command) ((SendableChooser) SmartDashboard.getData("Auton")).getSelected();
+    System.out.println("Auton: " + auto);
+    return auto;
   }
 }
