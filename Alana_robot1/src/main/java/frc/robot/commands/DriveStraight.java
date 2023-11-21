@@ -9,15 +9,19 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DriveStraight extends CommandBase {
   private Drivetrain drivetrain = null;
-  private long timeToDrive = 0;
+  private long timeToDrive = 55555;
   private long startTime = 0;
 
   /** Creates a new DriveStraight. */
   public DriveStraight(Drivetrain drivetrain, long timeToDrive) {
+    System.out.println("Parameter timeToDrive " + timeToDrive);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.drivetrain= drivetrain;
+    System.out.println("this.timeToDrive " + this.timeToDrive);
     this.timeToDrive = timeToDrive;
+    System.out.println("timeToDrive " + timeToDrive);
+    Thread.dumpStack();
   }
 
   // Called when the command is initially scheduled.
@@ -43,9 +47,12 @@ public class DriveStraight extends CommandBase {
   @Override
   public boolean isFinished() {
      if(System.currentTimeMillis() - startTime < timeToDrive) {
+      System.out.println("isFinished false " + System.currentTimeMillis() + "," + startTime + "," + timeToDrive);
       return false;
     } else {
-      return true;
+      System.out.println("isFinished true " + System.currentTimeMillis() + "," + startTime + "," + timeToDrive);
+      return true; 
+
     }
   }
 }

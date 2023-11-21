@@ -58,7 +58,7 @@ public final class Autos {
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
-    autonList.addOption("Drive Stright 5 sec.", driveStraightByTime(drivetrain, 10000));
+    autonList.addOption("Drive Stright 5 sec.", driveStraightByTime(drivetrain, (long) 10000));
     autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 113));
     autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -113));
     Command outAndBack = driveStraightByDistance(drivetrain, 74).andThen(driveStraightByDistance(drivetrain, -74));

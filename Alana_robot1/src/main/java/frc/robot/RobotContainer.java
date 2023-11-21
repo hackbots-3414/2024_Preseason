@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DefaultTeleopCommand;
+import frc.robot.commands.DriveStraight;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -38,7 +39,7 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(defaultTeleopCommand);
     // Configure the trigger bindings
     configureBindings();
-    SmartDashboard.putData("Auton",Autos.buildAutonPicker(drivetrain));
+    SmartDashboard.putData("Auton2",Autos.buildAutonPicker(drivetrain));
   }
 
   /**
@@ -68,8 +69,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
  //   return Autos.exampleAuto(m_exampleSubsystem);
-    Command auto = (Command) ((SendableChooser) SmartDashboard.getData("Auton")).getSelected();
+    Command auto = (Command) ((SendableChooser) SmartDashboard.getData("Auton2")).getSelected();
     System.out.println("Auton: " + auto);
+    auto = new DriveStraight(drivetrain, 55555);
     return auto;
   }
 }

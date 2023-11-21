@@ -2,7 +2,8 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/Auton": "String Chooser"
+      "/SmartDashboard/Auton": "String Chooser",
+      "/SmartDashboard/PIDTurn Controller": "PIDController"
     }
   }
 }
