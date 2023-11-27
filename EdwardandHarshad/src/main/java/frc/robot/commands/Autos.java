@@ -26,21 +26,29 @@ public final class Autos {
     return new DriveStraightEncoder(drivetrain, distanceToDrive);
   }
 
-    public static CommandBase createHealthToPhysicsAndbBackAgain(Drivetrain drivetrain){
-      return new DriveStraightEncoder(drivetrain, 176).andThen(
+  public static CommandBase turn(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new Turn(drivetrain, targetAngleDegrees);
+  }
+
+  public static CommandBase createPIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new PIDTurn(drivetrain, targetAngleDegrees);
+  }
+
+  public static CommandBase createHealthToPhysicsAndBackAgain(Drivetrain drivetrain) {
+    return new DriveStraightEncoder(drivetrain, 176).andThen(
         new Turn(drivetrain, -45),
         new DriveStraightEncoder(drivetrain, 156),
-        new Turn(drivetrain, -45), 
+        new Turn(drivetrain, -45),
         new DriveStraightEncoder(drivetrain, 120),
-        new Turn(drivetrain, -90), 
-        new DriveStraightEncoder(drivetrain, 105), 
-        new Turn(drivetrain, -90), 
+        new Turn(drivetrain, -90),
+        new DriveStraightEncoder(drivetrain, 105),
+        new Turn(drivetrain, -90),
         new DriveStraightEncoder(drivetrain, 125),
-         new Turn(drivetrain, 45), 
-        new DriveStraightEncoder(drivetrain, 100), 
-        new Turn(drivetrain, 45), 
+        new Turn(drivetrain, 45),
+        new DriveStraightEncoder(drivetrain, 100),
+        new Turn(drivetrain, 45),
         new DriveStraightEncoder(drivetrain, 156));
-    }
+  }
 
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
