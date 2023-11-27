@@ -20,7 +20,7 @@ public class PIDTurn extends PIDCommand {
   public PIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
     super(
         // The controller that the command will use
-        new PIDController(0.3, 0, 0),
+        new PIDController(0.00655, 0, 0),
         // This should return the measurement
         drivetrain::getTurnAngle,
         // This should return the setpoint (can also be a constant)
@@ -60,8 +60,8 @@ public class PIDTurn extends PIDCommand {
       super.initialize();
       drivetrain.resetYaw();
       getController().reset();
-      
-    }
+     }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

@@ -43,8 +43,11 @@ public class DriveStraight extends CommandBase {
   @Override
   public boolean isFinished() {
     if(System.currentTimeMillis() - startTime  < timeToDrive) {
+      System.out.println("isFinished true " + System.currentTimeMillis() + "," + timeToDrive);
       return false;
     } else {
+      System.out.println("isFinished true " + System.currentTimeMillis() + "," + timeToDrive);
+
       return true;
     }
   }
