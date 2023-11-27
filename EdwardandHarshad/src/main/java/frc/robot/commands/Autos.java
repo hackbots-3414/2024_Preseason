@@ -26,6 +26,7 @@ public final class Autos {
     return new DriveStraightEncoder(drivetrain, distanceToDrive);
   }
 
+<<<<<<< HEAD
     public static CommandBase createHealthToPhysicsAndbBackAgain(Drivetrain drivetrain){
       return new DriveStraightEncoder(drivetrain, 176).andThen(
         new Turn(drivetrain, -45),
@@ -41,6 +42,21 @@ public final class Autos {
         new Turn(drivetrain, 45), 
         new DriveStraightEncoder(drivetrain, 156));
     }
+=======
+  public static CommandBase turn(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new Turn(drivetrain, targetAngleDegrees);
+  }
+
+  public static CommandBase createPIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new PIDTurn(drivetrain, targetAngleDegrees);
+  }
+
+  public static CommandBase createHealthToPhysicsAndBackAgain(Drivetrain drivetrain)
+  {
+    // FIXME implement this sequence, replacing the WaitCommand
+    return new WaitCommand(10);
+  }
+>>>>>>> eaec2ba8c234663c98b4cdedb3d21a22162bbac1
 
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
@@ -50,6 +66,11 @@ public final class Autos {
     autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -113));
     Command outAndBack = driveStraightByDistance(drivetrain, 74).andThen(driveStraightByDistance(drivetrain, -74));
     autonList.addOption("Out and Back 50k", outAndBack);
+    autonList.addOption("Turn 90", turn(drivetrain, 90));
+    autonList.addOption("Turn -90", turn(drivetrain, -90));
+    autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, 90));
+    autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, -90));
+    autonList.addOption("There and Back Again", createHealthToPhysicsAndBackAgain(drivetrain));
     return autonList;
   }
 
