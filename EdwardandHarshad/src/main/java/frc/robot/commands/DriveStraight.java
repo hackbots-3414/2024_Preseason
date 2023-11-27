@@ -29,13 +29,13 @@ public class DriveStraight extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(0.3, 0);
+    drivetrain.autonDrive(0.3, 0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.drive(0, 0);
+    drivetrain.autonDrive(0, 0);
   }
 
   // Returns true when the command should end.
@@ -44,6 +44,7 @@ public class DriveStraight extends CommandBase {
     if(System.currentTimeMillis() - startTime  < timeToDrive) {
       return false;
     } else {
+      System.out.println("DriveStraight isFinished returns true " + System.currentTimeMillis() + ", " + startTime);
       return true;
     }
   }
