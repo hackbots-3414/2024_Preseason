@@ -42,6 +42,7 @@ public class Drivetrain extends SubsystemBase {
     motorBackRight.feed();
     SmartDashboard.putNumber("Encoder Average: ", getPosition());
     SmartDashboard.putNumber("Left Front Position: ", motorFrontLeft.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Yaw", getTurnAngle());
   }
 
   public void drive(double xSpeed, double zRotation) {

@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveStraightConstants;
@@ -26,6 +27,7 @@ public class DriveStraightEncoder extends CommandBase {
   @Override
   public void initialize() {
     startPos = drivetrain.getPosition();
+    SmartDashboard.putString("command", getClass().getName());
     System.out.println("initialize: startPos = " + startPos);
   }
 

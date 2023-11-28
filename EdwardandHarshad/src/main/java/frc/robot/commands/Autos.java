@@ -39,15 +39,15 @@ public final class Autos {
         new PIDTurn(drivetrain, -45),
         new DriveStraightEncoder(drivetrain, 156),
         new PIDTurn(drivetrain, -45),
-        new DriveStraightEncoder(drivetrain, 120),
+        new DriveStraightEncoder(drivetrain, 178),
         new PIDTurn(drivetrain, -90),
-        new DriveStraightEncoder(drivetrain, 105),
+        new DriveStraightEncoder(drivetrain, 35),
         new PIDTurn(drivetrain, -90),
+        new DriveStraightEncoder(drivetrain, 168),
+        new PIDTurn(drivetrain, 45),
         new DriveStraightEncoder(drivetrain, 125),
         new PIDTurn(drivetrain, 45),
-        new DriveStraightEncoder(drivetrain, 100),
-        new PIDTurn(drivetrain, 45),
-        new DriveStraightEncoder(drivetrain, 156));
+        new DriveStraightEncoder(drivetrain, 140));
   }
 
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
@@ -61,7 +61,10 @@ public final class Autos {
     autonList.addOption("Turn 90", turn(drivetrain, 90));
     autonList.addOption("Turn -90", turn(drivetrain, -90));
     autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, 90));
-    autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, -90));
+    autonList.addOption("PID Turn 45", createPIDTurn(drivetrain, 45));
+    autonList.addOption("PID Turn -90", createPIDTurn(drivetrain, -90));
+    autonList.addOption("PID Turn -45", createPIDTurn(drivetrain, -45));
+
     autonList.addOption("There and Back Again", createHealthToPhysicsAndBackAgain(drivetrain));
     return autonList;
   }

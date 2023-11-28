@@ -20,7 +20,11 @@ public class PIDTurn extends PIDCommand {
   public PIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
     super(
         // The controller that the command will use
-        new PIDController(0.00655, 0, 0),
+        new PIDController(0.00655, 0.000065, 0),
+        //i=0.0000655: overshot by 1.78
+        //i=0.00006: undershot and output was too small for it to move, did not complete turn
+        //i=0.000065: undershot by between 12 and 4
+        //i=0.0000652: undershot by between 4 and 0.5
         // This should return the measurement
         drivetrain::getTurnAngle,
         // This should return the setpoint (can also be a constant)
@@ -33,6 +37,7 @@ public class PIDTurn extends PIDCommand {
          // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html
          output = MathUtil.clamp(output, -0.2, 0.2);
           drivetrain.autonDrive(0, output);
+          SmartDashboard.putNumber("Output", output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
@@ -60,11 +65,14 @@ public class PIDTurn extends PIDCommand {
     super.initialize();
     drivetrain.resetYaw();
     getController().reset();
+    SmartDashboard.putString("command", getClass().getName());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    SmartDashboard.putBoolean("atSetPoint", getController().atSetpoint());
+    SmartDashboard.putNumber("SetPoint", getController().getSetpoint());
     return getController().atSetpoint();
   }
 }
