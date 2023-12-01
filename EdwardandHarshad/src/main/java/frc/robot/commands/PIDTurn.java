@@ -20,7 +20,7 @@ public class PIDTurn extends PIDCommand {
   public PIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
     super(
         // The controller that the command will use
-        new PIDController(0.00655, 0.000065, 0),
+        new PIDController(0.009, 0, 0.0003),
         //i=0.0000655: overshot by 1.78
         //i=0.00006: undershot and output was too small for it to move, did not complete turn
         //i=0.000065: undershot by between 12 and 4
@@ -48,6 +48,9 @@ public class PIDTurn extends PIDCommand {
     // We'll never be at exactly our measurement, so, how close is close enough?
     getController().setTolerance(2);
     SmartDashboard.putData("PIDTurn Controller", getController());
+    SmartDashboard.putNumber("P", getController().getP());
+    SmartDashboard.putNumber("I", getController().getI());
+    SmartDashboard.putNumber("D", getController().getD());
   }
 
   /**
@@ -64,7 +67,9 @@ public class PIDTurn extends PIDCommand {
     // parts of this class will fail.
     super.initialize();
     drivetrain.resetYaw();
-    getController().reset();
+   getController().setP(SmartDashboard.getNumber("P", getController().getP()));
+   getController().setI(SmartDashboard.getNumber("I", getController().getI()));
+   getController().setD(SmartDashboard.getNumber("D", getController().getD()));
     SmartDashboard.putString("command", getClass().getName());
   }
 
@@ -73,6 +78,7 @@ public class PIDTurn extends PIDCommand {
   public boolean isFinished() {
     SmartDashboard.putBoolean("atSetPoint", getController().atSetpoint());
     SmartDashboard.putNumber("SetPoint", getController().getSetpoint());
-    return getController().atSetpoint();
+    // return getController().atSetpoint();
+    return false;
   }
 }
