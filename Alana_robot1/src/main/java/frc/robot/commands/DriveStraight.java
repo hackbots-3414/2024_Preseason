@@ -34,7 +34,7 @@ public class DriveStraight extends CommandBase {
   @Override
   public void execute() {
     System.out.println("drivestraight.execute");
-    drivetrain.autonDrive(0.5,0);
+    drivetrain.autonDrive(0.3,0);
   }
 
   // Called once the command ends or is interrupted.

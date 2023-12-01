@@ -43,16 +43,24 @@ public class PIDTurn extends PIDCommand {
     //We'll never be at exactly our measurement
     getController().setTolerance(2);
     SmartDashboard.putData("PIDTurn Controller", getController());
+    getController().setP(SmartDashboard.getNumber("P", getController().getP()));
+    getController().setP(SmartDashboard.getNumber("I", getController().getI()));
+  SmartDashboard.putNumber("D", getController().getD());
   }
 
 @Override
 public void initialize() {
   super.initialize();
   drivetrain.resetYaw();
-  getController().reset();
+  getController().setP(SmartDashboard.getNumber("P", getController().getP()));
+  getController().setI(SmartDashboard.getNumber("I", getController().getI()));
+  getController().setD(SmartDashboard.getNumber("D", getController().getD()));
+  SmartDashboard.putString("command", getClass().getName());
 }
   @Override
   public boolean isFinished() {
+    SmartDashboard.putBoolean("at Set Point", getController().atSetpoint());
+    SmartDashboard.putNumber("Set Point", getController().getSetpoint());
     return getController().atSetpoint();
   }
 }
