@@ -13,14 +13,14 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PIDTurn extends PIDCommand {
+public class PIDTurn45 extends PIDCommand {
   private Drivetrain drivetrain = null;
 
   /** Creates a new PIDTurn. */
-  public PIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
+  public PIDTurn45(Drivetrain drivetrain, double targetAngleDegrees) {
     super(
         // The controller that the command will use
-        new PIDController(0.009, 0, 0.0003),
+        new PIDController(0.0093, 0.0023, 0.0005),
         //i=0.0000655: overshot by 1.78
         //i=0.00006: undershot and output was too small for it to move, did not complete turn
         //i=0.000065: undershot by between 12 and 4
@@ -37,7 +37,7 @@ public class PIDTurn extends PIDCommand {
          // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html
          output = MathUtil.clamp(output, -0.2, 0.2);
           drivetrain.autonDrive(0, output);
-          SmartDashboard.putNumber("Output", output);
+          SmartDashboard.putNumber("Output45", output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
@@ -47,10 +47,10 @@ public class PIDTurn extends PIDCommand {
     getController().enableContinuousInput(-180, 180);
     // We'll never be at exactly our measurement, so, how close is close enough?
     getController().setTolerance(2);
-    SmartDashboard.putData("PIDTurn Controller", getController());
-    SmartDashboard.putNumber("P", getController().getP());
-    SmartDashboard.putNumber("I", getController().getI());
-    SmartDashboard.putNumber("D", getController().getD());
+    SmartDashboard.putData("PIDTurn Controller45", getController());
+    SmartDashboard.putNumber("P45", getController().getP());
+    SmartDashboard.putNumber("I45", getController().getI());
+    SmartDashboard.putNumber("D45", getController().getD());
   }
 
   /**
@@ -67,18 +67,18 @@ public class PIDTurn extends PIDCommand {
     // parts of this class will fail.
     super.initialize();
     drivetrain.resetYaw();
-   getController().setP(SmartDashboard.getNumber("P", getController().getP()));
-   getController().setI(SmartDashboard.getNumber("I", getController().getI()));
-   getController().setD(SmartDashboard.getNumber("D", getController().getD()));
+   getController().setP(SmartDashboard.getNumber("P45", getController().getP()));
+   getController().setI(SmartDashboard.getNumber("I45", getController().getI()));
+   getController().setD(SmartDashboard.getNumber("D45", getController().getD()));
     SmartDashboard.putString("command", getClass().getName());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    SmartDashboard.putBoolean("atSetPoint", getController().atSetpoint());
-    SmartDashboard.putNumber("SetPoint", getController().getSetpoint());
-    // return getController().atSetpoint();
-    return false;
+    SmartDashboard.putBoolean("atSetPoint45", getController().atSetpoint());
+    SmartDashboard.putNumber("SetPoint45", getController().getSetpoint());
+    return getController().atSetpoint();
+    //return false;
   }
 }

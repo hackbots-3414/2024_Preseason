@@ -30,23 +30,27 @@ public final class Autos {
     return new Turn(drivetrain, targetAngleDegrees);
   }
 
-  public static CommandBase createPIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
-    return new PIDTurn(drivetrain, targetAngleDegrees);
+  public static CommandBase createPIDTurn90(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new PIDTurn90(drivetrain, targetAngleDegrees);
+  }
+
+  public static CommandBase createPIDTurn45(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new PIDTurn45(drivetrain, targetAngleDegrees);
   }
 
   public static CommandBase createHealthToPhysicsAndBackAgain(Drivetrain drivetrain) {
     return new DriveStraightEncoder(drivetrain, 176).andThen(
-        new PIDTurn(drivetrain, -45),
+        new PIDTurn45(drivetrain, -45),
         new DriveStraightEncoder(drivetrain, 156),
-        new PIDTurn(drivetrain, -45),
+        new PIDTurn45(drivetrain, -45),
         new DriveStraightEncoder(drivetrain, 178),
-        new PIDTurn(drivetrain, -90),
-        new DriveStraightEncoder(drivetrain, 35),
-        new PIDTurn(drivetrain, -90),
+        new PIDTurn90(drivetrain, -90),
+        new DriveStraightEncoder(drivetrain, 25),
+        new PIDTurn90(drivetrain, -90),
         new DriveStraightEncoder(drivetrain, 168),
-        new PIDTurn(drivetrain, 45),
+        new PIDTurn45(drivetrain, 45),
         new DriveStraightEncoder(drivetrain, 125),
-        new PIDTurn(drivetrain, 45),
+        new PIDTurn45(drivetrain, 45),
         new DriveStraightEncoder(drivetrain, 140));
   }
 
@@ -60,10 +64,10 @@ public final class Autos {
     autonList.addOption("Out and Back 50k", outAndBack);
     autonList.addOption("Turn 90", turn(drivetrain, 90));
     autonList.addOption("Turn -90", turn(drivetrain, -90));
-    autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, 90));
-    autonList.addOption("PID Turn 45", createPIDTurn(drivetrain, 45));
-    autonList.addOption("PID Turn -90", createPIDTurn(drivetrain, -90));
-    autonList.addOption("PID Turn -45", createPIDTurn(drivetrain, -45));
+    autonList.addOption("PID Turn 90", createPIDTurn90(drivetrain, 90));
+    autonList.addOption("PID Turn 45", createPIDTurn45(drivetrain, 45));
+    autonList.addOption("PID Turn -90", createPIDTurn90(drivetrain, -90));
+    autonList.addOption("PID Turn -45", createPIDTurn45(drivetrain, -45));
 
     autonList.addOption("There and Back Again", createHealthToPhysicsAndBackAgain(drivetrain));
     return autonList;
