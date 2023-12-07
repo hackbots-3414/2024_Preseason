@@ -20,7 +20,7 @@ public class PIDTurn extends PIDCommand {
   public PIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
     super(
         // The controller that the command will use
-        new PIDController(0.00655, 0, 0),
+        new PIDController(0.009, 0, 0.0003),
         // This should return the measurement
         drivetrain::getTurnAngle,
         // This should return the setpoint (can also be a constant)
@@ -33,7 +33,8 @@ public class PIDTurn extends PIDCommand {
          // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html
          output = MathUtil.clamp(output, -0.2, 0.2);
           drivetrain.autonDrive(0, output);
-        });
+          SmartDashboard.putNumber("Output", output);
+        }); 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
