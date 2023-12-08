@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -13,6 +15,10 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  static {
+    SmartDashboard.putNumber("Gearbox Ratio", 11.3);
+  }
+  public static double GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", 11.3);
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
@@ -21,25 +27,28 @@ public final class Constants {
     public static final double DRIVE_STRAIGHT_SPEED = 0.3;
   }
 
-  private static double inches;
-  public static String inchesToTicks;
-
-  public static double inchesToTicks(double meters) {
+  public static double inchesToTicks(double inches) {
     // 74 inches = 86146 ticks
-    // 74 / Math.PI / 6.25 = 3.77 rotations * 2048 ticks = 7718
+    // 74 / Math.PI / 6.25 = 3.77 rotations * 2048 ticks = 7718 ticks
     // gearbox = 86146 / 7718 = 11.16
-    // double gearbox = 0.4;
+    // double gearbox = 9.4;
     // 113 inches = 134895
     // 113 / Math.PI / 6.25 = 5.755 rotations * 2048 ticks = 11786
-    //gearbox = 134895 / 11786 = 11.45
-    double gearbox = 11.3;
+    // gearbox = 134895 / 11786 = 11.45
     double rotations = inches / Math.PI / 6.25;
-    return rotations * gearbox * 2048;
+    GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", GEARBOX);
+    return rotations * GEARBOX * 2048;
   }
+
+  /**
+   * Inverse of inchesToTicks()
+   * @param ticks
+   * @return
+   */
   public static double ticksToInches(double ticks) {
+    GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", GEARBOX);
+    double gearbox = GEARBOX; 
 
-    double gearbox1 = 11.3;
-
-    return (ticks / gearbox1 / 2048) * (6.25 * Math.PI);
+    return (ticks / gearbox / 2048) * (6.25 * Math.PI);
   }
 }

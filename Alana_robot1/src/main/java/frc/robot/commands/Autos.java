@@ -13,16 +13,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public final class Autos {
-  private static long distanceToDrive;
-  private static SendableChooser<Command> autonList;
-  private static long millisecondsToDrive;
-
   /** Example static factory for an autonomous command. */
   public static CommandBase exampleAuto(ExampleSubsystem subsystem) {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
   }
 
-  public static CommandBase driveStraightByTime(Drivetrain drivetrain, long milisecondsToDrive) {
+  public static CommandBase driveStraightByTime(Drivetrain drivetrain, long millisecondsToDrive) {
     return new DriveStraight(drivetrain, millisecondsToDrive);
   }
 
@@ -34,44 +30,50 @@ public final class Autos {
     return new Turn(drivetrain, targetAngleDegrees);
   }
 
-  public static CommandBase createPIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
-    return new PIDTurn(drivetrain, targetAngleDegrees);
+  public static CommandBase createPIDTurn90(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new PIDTurn90(drivetrain, targetAngleDegrees);
   }
 
-  public static CommandBase createHealthToPhysicsAndBackAgain(Drivetrain drivetrain)
-  {
-  return new DriveStraightEncoder(drivetrain, 176).andThen(
-    new Turn(drivetrain, -45),
-    new DriveStraightEncoder(drivetrain, 156),
-    new Turn(drivetrain, -45),
-    new DriveStraightEncoder(drivetrain, 120),
-    new Turn(drivetrain, -90),
-    new DriveStraightEncoder(drivetrain, 105),
-    new Turn(drivetrain, -90),
-    new DriveStraightEncoder(drivetrain, 125),
-    new Turn(drivetrain, 45),
-    new DriveStraightEncoder(drivetrain, 100),
-    new Turn(drivetrain, 45),
-    new DriveStraightEncoder(drivetrain, 156));
+  public static CommandBase createPIDTurn45(Drivetrain drivetrain, double targetAngleDegrees) {
+    return new PIDTurn45(drivetrain, targetAngleDegrees);
+  }
+
+  public static CommandBase createHealthToPhysicsAndBackAgain(Drivetrain drivetrain) {
+    return new DriveStraightEncoder(drivetrain, 176).andThen(
+        new PIDTurn45(drivetrain, -45),
+        new DriveStraightEncoder(drivetrain, 156),
+        new PIDTurn45(drivetrain, -45),
+        new DriveStraightEncoder(drivetrain, 178),
+        new PIDTurn90(drivetrain, -90),
+        new DriveStraightEncoder(drivetrain, 25),
+        new PIDTurn90(drivetrain, -90),
+        new DriveStraightEncoder(drivetrain, 168),
+        new PIDTurn45(drivetrain, 45),
+        new DriveStraightEncoder(drivetrain, 125),
+        new PIDTurn45(drivetrain, 45),
+        new DriveStraightEncoder(drivetrain, 140));
   }
 
   public static SendableChooser<Command> buildAutonPicker(Drivetrain drivetrain) {
     SendableChooser<Command> autonList = new SendableChooser<>();
     autonList.setDefaultOption("Do Nothing", new WaitCommand(5.0));
-    autonList.addOption("Drive Stright 5 sec.", driveStraightByTime(drivetrain, (long) 10000));
+    autonList.addOption("Drive Straight 5 sec.", driveStraightByTime(drivetrain, 5000));
     autonList.addOption("Drive Straight 100K ticks", driveStraightByDistance(drivetrain, 113));
     autonList.addOption("Drive Straight -100K ticks", driveStraightByDistance(drivetrain, -113));
     Command outAndBack = driveStraightByDistance(drivetrain, 74).andThen(driveStraightByDistance(drivetrain, -74));
     autonList.addOption("Out and Back 50k", outAndBack);
     autonList.addOption("Turn 90", turn(drivetrain, 90));
     autonList.addOption("Turn -90", turn(drivetrain, -90));
-    autonList.addOption("PID Turn 90", createPIDTurn(drivetrain, 90));
-    autonList.addOption("There and Back Again",  createHealthToPhysicsAndBackAgain(drivetrain));
+    autonList.addOption("PID Turn 90", createPIDTurn90(drivetrain, 90));
+    autonList.addOption("PID Turn 45", createPIDTurn45(drivetrain, 45));
+    autonList.addOption("PID Turn -90", createPIDTurn90(drivetrain, -90));
+    autonList.addOption("PID Turn -45", createPIDTurn45(drivetrain, -45));
+
+    autonList.addOption("There and Back Again", createHealthToPhysicsAndBackAgain(drivetrain));
     return autonList;
   }
-
 
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
   }
-  }
+}

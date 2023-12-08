@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveStraightConstants;
@@ -26,6 +27,7 @@ public class DriveStraightEncoder extends CommandBase {
   @Override
   public void initialize() {
     startPos = drivetrain.getPosition();
+    SmartDashboard.putString("command", getClass().getName());
     System.out.println("initialize: startPos = " + startPos);
   }
 
@@ -43,17 +45,19 @@ public class DriveStraightEncoder extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  drivetrain.autonDrive(0, 0);
+    drivetrain.autonDrive(0, 0);
   }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("isFinished(): drivetrain.getPosition(): " + drivetrain.getPosition() + drivetrain.getPosition() + "startPos" + startPos + ", distanceToDrive: " + distanceToDrive);
+    System.out.println("isFinished(): drivetrain.getPosition(): " + drivetrain.getPosition() + ", startPos: " + startPos
+        + ", distanceToDrive: " + distanceToDrive);
     System.out.println("isFinished(): " + (drivetrain.getPosition() - startPos >= distanceToDrive));
 
-    if(distanceToDrive < 0){
+    if (distanceToDrive < 0) {
       return drivetrain.getPosition() - startPos < distanceToDrive;
     }
-  return drivetrain.getPosition()- startPos >= distanceToDrive;
+    return drivetrain.getPosition() - startPos >= distanceToDrive;
   }
 }

@@ -10,6 +10,7 @@ import frc.robot.subsystems.Drivetrain;
 public class Turn extends CommandBase {
   private Drivetrain drivetrain = null;
   private double targetAngleDegrees = 0;
+
   /** Creates a new Turn. */
   public Turn(Drivetrain drivetrain, double targetAngleDegrees) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -44,7 +45,7 @@ public class Turn extends CommandBase {
   @Override
   public boolean isFinished() {
     double currentAngle = drivetrain.getTurnAngle();
-    return (targetAngleDegrees > 0 & targetAngleDegrees - currentAngle <=0) || 
-    (targetAngleDegrees < 0  && targetAngleDegrees - currentAngle >= 0);
+    return (targetAngleDegrees > 0 && targetAngleDegrees - currentAngle <= 0) || 
+    (targetAngleDegrees < 0 && targetAngleDegrees - currentAngle >= 0);
   }
 }
