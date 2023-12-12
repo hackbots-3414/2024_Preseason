@@ -7,11 +7,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
@@ -19,8 +23,21 @@ public final class Constants {
     SmartDashboard.putNumber("Gearbox Ratio", 11.3);
   }
   public static double GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", 11.3);
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+  }
+
+  public static class RamseteConstants {
+    public static final double ksVolts = 0.10997;
+    public static final double kvVoltSecondsPerInch = 0.062678;
+    public static final double kaVoltSecondsSquaredPerInch = 0.0085714;
+    public static final double kPDriveVel = 0.080539;
+    public static final double kTrackwidthInch = 0.69;
+    public static final double kMaxSpeedMetersPerSecond = 2;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
   }
 
   public static class DriveStraightConstants {
@@ -42,12 +59,13 @@ public final class Constants {
 
   /**
    * Inverse of inchesToTicks()
+   * 
    * @param ticks
    * @return
    */
   public static double ticksToInches(double ticks) {
     GEARBOX = SmartDashboard.getNumber("Gearbox Ratio", GEARBOX);
-    double gearbox = GEARBOX; 
+    double gearbox = GEARBOX;
 
     return (ticks / gearbox / 2048) * (6.25 * Math.PI);
   }
