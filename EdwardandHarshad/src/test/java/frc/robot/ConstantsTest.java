@@ -9,7 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 
-/** Add your docs here. */
+/** 
+ * Very simple JUnit unit test.
+ * See https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/robot-simulation/unit-testing.html
+ */
 public class ConstantsTest {
 
     /**
