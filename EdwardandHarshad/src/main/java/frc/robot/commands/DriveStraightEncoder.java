@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -11,6 +14,7 @@ import frc.robot.Constants.DriveStraightConstants;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveStraightEncoder extends CommandBase {
+  private static final Logger LOG = LoggerFactory.getLogger(DriveStraightEncoder.class);
   private Drivetrain drivetrain = null;
   private double distanceToDrive = 0.0;
   private double startPos = 0.0;
@@ -28,7 +32,8 @@ public class DriveStraightEncoder extends CommandBase {
   public void initialize() {
     startPos = drivetrain.getPosition();
     SmartDashboard.putString("command", getClass().getName());
-    System.out.println("initialize: startPos = " + startPos);
+    //System.out.println("initialize: startPos = " + startPos);
+    LOG.debug("initialize: startPos = {}", startPos);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,7 +44,8 @@ public class DriveStraightEncoder extends CommandBase {
     } else {
       drivetrain.autonDrive(DriveStraightConstants.DRIVE_STRAIGHT_SPEED, 0);
     }
-    System.out.println("execute");
+    //System.out.println("execute");
+    LOG.trace("execute");
   }
 
   // Called once the command ends or is interrupted.
@@ -51,10 +57,11 @@ public class DriveStraightEncoder extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("isFinished(): drivetrain.getPosition(): " + drivetrain.getPosition() + ", startPos: " + startPos
-        + ", distanceToDrive: " + distanceToDrive);
-    System.out.println("isFinished(): " + (drivetrain.getPosition() - startPos >= distanceToDrive));
-
+    // System.out.println("isFinished(): drivetrain.getPosition(): " + drivetrain.getPosition() + ", startPos: " + startPos
+    //     + ", distanceToDrive: " + distanceToDrive);
+    // System.out.println("isFinished(): " + (drivetrain.getPosition() - startPos >= distanceToDrive));
+    LOG.debug("isFinished(): drivetrain.getPosition(): {}, startPos: {}, distanceToDrive: {}", drivetrain.getPosition(), startPos, distanceToDrive);
+    LOG.debug("isFinished(): {}", (drivetrain.getPosition() - startPos >= distanceToDrive));
     if (distanceToDrive < 0) {
       return drivetrain.getPosition() - startPos < distanceToDrive;
     }
