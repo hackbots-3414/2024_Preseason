@@ -9,7 +9,7 @@
   </appender>
 
   <logger name="frc.robot.commands" level="INFO"/>
-  <!--logger name="frc.robot.commands.MrZPrintCommand" level="TRACE"/-->
+  <logger name="frc.robot.commands.DriveStraightEncoder" level="TRACE"/>
 
   <root level="WARN">
     <appender-ref ref="STDOUT"/>
