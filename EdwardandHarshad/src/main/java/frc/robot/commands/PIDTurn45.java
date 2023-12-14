@@ -13,14 +13,14 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PIDTurn extends PIDCommand {
+public class PIDTurn45 extends PIDCommand {
   private Drivetrain drivetrain = null;
 
   /** Creates a new PIDTurn. */
-  public PIDTurn(Drivetrain drivetrain, double targetAngleDegrees) {
+  public PIDTurn45(Drivetrain drivetrain, double targetAngleDegrees) {
     super(
         // The controller that the command will use
-        new PIDController(0.00655, 0, 0),
+        new PIDController(0.009, 0.0007, 0.0003),
         // This should return the measurement
         drivetrain::getTurnAngle,
         // This should return the setpoint (can also be a constant)
@@ -54,11 +54,13 @@ public class PIDTurn extends PIDCommand {
   public void initialize() {
     super.initialize();
     drivetrain.resetYaw();
+    SmartDashboard.putString("command", getClass().getName());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return false;
+    // return getController().atSetpoint();
   }
 }
