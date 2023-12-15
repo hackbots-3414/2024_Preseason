@@ -23,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX motorBackRight = new WPI_TalonFX(14);
   private DifferentialDrive differentialDrive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
   public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
-      Constants.RamseteConstants.kTrackwidthInch);
+      Constants.RamseteConstants.kTrackwidthMeter);
   private AHRS navx = new AHRS();
   private final DifferentialDriveOdometry m_odometry;
 
@@ -86,6 +86,18 @@ public class Drivetrain extends SubsystemBase {
 
   public void autonDrive(double xSpeed, double zRotation) {
     differentialDrive.arcadeDrive(xSpeed, zRotation, false);
+  }
+
+    /**
+   * Controls the left and right sides of the drive directly with voltages.
+   *
+   * @param leftVolts the commanded left output
+   * @param rightVolts the commanded right output
+   */
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    motorFrontLeft.setVoltage(leftVolts);
+    motorFrontRight.setVoltage(rightVolts);
+    differentialDrive.feed();
   }
 
   public double getPosition() {

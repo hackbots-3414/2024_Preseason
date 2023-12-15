@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.fasterxml.jackson.databind.ser.std.SqlTimeSerializer;
+
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -29,11 +32,12 @@ public final class Constants {
   }
 
   public static class RamseteConstants {
-    public static final double ksVolts = 0.10997;
-    public static final double kvVoltSecondsPerInch = 0.062678;
-    public static final double kaVoltSecondsSquaredPerInch = 0.0085714;
-    public static final double kPDriveVel = 0.080539;
-    public static final double kTrackwidthInch = 0.69;
+    public static final double ksVolts = 0.13624;
+    public static final double kvVoltSecondsPerMeter = 2.453;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.30992;
+    public static final double kPDriveVel = 1.9767;
+    public static final double kTrackwidthMeter = 0.69;
+    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeter);
     public static final double kMaxSpeedMetersPerSecond = 2;
     public static final double kMaxAccelerationMetersPerSecondSquared = 1;
     public static final double kRamseteB = 2;
