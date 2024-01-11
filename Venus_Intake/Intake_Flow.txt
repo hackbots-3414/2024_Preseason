@@ -1,0 +1,23 @@
+Press X on XBox controller to activate Intake Sequence until we release the button
+Drop Intake to pickup position
+Turn on Intake Wheels at some speed
+Bottom Belt needs to turn on at some speed
+Middle Belt needs to turn on at some speed
+
+Loop:
+If I have an empty Top Belt, turn on the Top Belt at some speed
+	else, if Top Belt is not empty, do not turn on Top Belt
+
+Eventually, ball is swept into Intake
+
+If Middle Belt is not empty AND Top Belt is not empty, run Stop Sequence
+
+If Top Belt is empty, run until Top Belt is not empty, then turn off Top Belt
+
+If X button released, run Stop Sequence
+
+Run Loop
+
+Stop Sequence:
+Stop all Intake motors
+Raise Intake arms
