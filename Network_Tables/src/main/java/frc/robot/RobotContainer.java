@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.subsystems.Publisher;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Subscriber;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +21,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Subscriber m_exampleSubsystem = new Subscriber();
+  private final Subscriber m_Subscriber = new Subscriber();
+  private final Publisher m_Publisher = new Publisher();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -58,6 +60,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return Autos.exampleAuto(m_Subscriber);
   }
 }

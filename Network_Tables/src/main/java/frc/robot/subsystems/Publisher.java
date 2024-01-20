@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.DoubleArrayTopic;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.GamePiece;
 
@@ -22,6 +23,9 @@ public class Publisher extends SubsystemBase {
   private DoubleArrayTopic gpConfidenceTopic = gpTable.getDoubleArrayTopic("confidence");
   private DoubleArrayEntry gpAngleEntry = gpAngleTopic.getEntry(new double[0], PubSubOption.keepDuplicates(true));
   private DoubleArrayEntry gpConfidenceEntry = gpConfidenceTopic.getEntry(new double[0], PubSubOption.keepDuplicates(true));
+  public Publisher() {
+    SmartDashboard.putNumber("#gamepieces", 0);
+  }
   
   @Override
   public void periodic() {
@@ -49,7 +53,7 @@ public class Publisher extends SubsystemBase {
 
   private GamePiece[] createData() {
     GamePiece thisGamePiece;
-    GamePiece[] gpList = new GamePiece[6];
+    GamePiece[] gpList = new GamePiece[(int) SmartDashboard.getNumber("#gamepieces", 0)];
     for (int i = 0; i < gpList.length; i++) {
       thisGamePiece = new GamePiece();
       thisGamePiece.setConfidence(100 / (i + 1));
