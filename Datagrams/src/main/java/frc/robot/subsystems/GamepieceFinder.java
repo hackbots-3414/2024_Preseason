@@ -88,6 +88,10 @@ public class GamepieceFinder extends SubsystemBase {
    */
   public void updateBuffer() {
     LOG.trace("updateBuffer() ENTER");
+    if (channel == null) {
+      LOG.trace("Channel never opened - EXIT");
+      return;
+    }
     SocketAddress success = null;
     // flush any leftover data
     receiveBuffer.clear();
