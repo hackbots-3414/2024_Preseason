@@ -9,11 +9,14 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Gamepiece;
+import frc.robot.Constants.NoteFinderConstants;
 import frc.robot.Constants.NoteFinderConstants;
 
 /**
@@ -29,6 +32,9 @@ public class NoteFinder extends SubsystemBase {
   private static final Logger LOG = LoggerFactory.getLogger(NoteFinder.class);
   private DatagramChannel noteChannel = null;
   private ByteBuffer byteReceiver = ByteBuffer.allocate(NoteFinderConstants.BUFFER_SIZE);
+  private ArrayList<Gamepiece> gamepieces = new ArrayList<>();
+  private StringBuffer status = new StringBuffer();
+  private long lastUpdateTime = 0;
 
   /** Creates a new NoteFinder. */
   public NoteFinder() {
