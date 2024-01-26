@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
@@ -21,7 +22,8 @@ import frc.robot.Constants.NoteFinderConstants;
  * 512 bytes max payload
  * 1 decimal place
  * 
- * [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test. `~!@#$%^&*()_+|\}]{[]};:',.<>/?"
+ * [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test.
+ * `~!@#$%^&*()_+|\}]{[]};:',.<>/?"
  */
 public class NoteFinder extends SubsystemBase {
   private static final Logger LOG = LoggerFactory.getLogger(NoteFinder.class);
@@ -32,6 +34,7 @@ public class NoteFinder extends SubsystemBase {
   public NoteFinder() {
     try {
       noteChannel = DatagramChannel.open();
+      noteChannel.configureBlocking(false);
       noteChannel.socket().bind(new InetSocketAddress(NoteFinderConstants.DATAGRAM_PORT));
     } catch (IOException ioe) {
       LOG.error("Failure to open note channel", ioe);
@@ -41,12 +44,17 @@ public class NoteFinder extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // dataReceiver();
   }
 
-  public void dataReceiver(){
-    try{
-    noteChannel.receive(byteReceiver);
-    LOG.trace("receive data: {}", byteReceiver);
+  public void dataReceiver() {
+    try {
+      byteReceiver.clear();
+      SocketAddress senderAddress = noteChannel.receive(byteReceiver);
+      if (senderAddress == null) {
+        return;
+      }
+      LOG.trace("receive data: {} Sender: {}", byteReceiver, senderAddress);
     } catch (Exception ioe) {
       LOG.error("Failure to receive data", ioe);
     }
