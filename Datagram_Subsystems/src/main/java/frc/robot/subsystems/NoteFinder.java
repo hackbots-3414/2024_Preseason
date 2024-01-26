@@ -46,17 +46,17 @@ public class NoteFinder extends SubsystemBase {
     }
   }
 
-public Gamepiece[] getGamepieces() {
-  return gamepieces.toArray(new Gamepiece[gamepieces.size()]);
-}
+  public Gamepiece[] getGamepieces() {
+    return gamepieces.toArray(new Gamepiece[gamepieces.size()]);
+  }
 
-public String getStatus() {
-  return status.toString();
-}
+  public String getStatus() {
+    return status.toString();
+  }
 
-public long getLastUpdateTime() {
-  return lastUpdateTime;
-}
+  public long getLastUpdateTime() {
+    return lastUpdateTime;
+  }
 
   @Override
   public void periodic() {
@@ -75,6 +75,16 @@ public long getLastUpdateTime() {
     } catch (Exception ioe) {
       LOG.error("Failure to receive data", ioe);
     }
+    parseBuffer();
+  }
 
+  private void parseBuffer() {
+    //[-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test."
+    byteReceiver.rewind();
+    byte currentByte = byteReceiver.get();
+    if(currentByte != '[') {
+      LOG.trace("Bad message");
+      return;
+    }
   }
 }
