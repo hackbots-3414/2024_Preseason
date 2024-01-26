@@ -6,7 +6,7 @@
    </encoder>
  </appender>
 
- <logger name="frc.robot.commands" level="INFO"/>
+ <logger name="frc.robot.subsystems.DatagramSender" level="TRACE"/>
  <!--logger name="frc.robot.subsystems.GamepieceFinder" level="TRACE"/-->
 
  <root level="WARN">

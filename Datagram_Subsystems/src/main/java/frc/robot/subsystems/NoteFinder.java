@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
@@ -22,6 +23,7 @@ import frc.robot.Constants.NoteFinderConstants;
  * 1 decimal place
  * 
  * [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test. `~!@#$%^&*()_+|\}]{[]};:',.<>/?"
+ * `~!@#$%^&*()_+}]{[]};:.<>/?"
  */
 public class NoteFinder extends SubsystemBase {
   private static final Logger LOG = LoggerFactory.getLogger(NoteFinder.class);
@@ -41,12 +43,18 @@ public class NoteFinder extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // dataRwciever();
   }
 
   public void dataReceiver(){
+    LOG.trace("dataReceiver entered");
     try{
-    noteChannel.receive(byteReceiver);
-    LOG.trace("receive data: {}", byteReceiver);
+    byteReceiver.clear();
+    SocketAddress senderAddress = noteChannel.receive(byteReceiver);
+    LOG.trace("receive data: {} Sender: {}", byteReceiver, senderAddress);
+    if (senderAddress == null) {
+      return;
+    }
     } catch (Exception ioe) {
       LOG.error("Failure to receive data", ioe);
     }

@@ -9,6 +9,6 @@ public class Constants {
     public class NoteFinderConstants { 
         public static final int DATAGRAM_PORT = 5800;
         public static final int BUFFER_SIZE = 512;
-        public static final double CYCLE_TIME = 0.003;
+        public static final double CYCLE_TIME = 0.03;
     }
 }
