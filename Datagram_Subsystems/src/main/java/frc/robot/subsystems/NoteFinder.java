@@ -89,9 +89,13 @@ public class NoteFinder extends SubsystemBase {
     gamepieces.clear();
     StringBuilder stringBuilder = new StringBuilder(NoteFinderConstants.BUFFER_SIZE);
     char currentByte = 0;
+    int commaCount = 0;
     // Copying message into a bytebuilder
     for (int i = 0; i < byteReceiver.limit(); i++) {
       currentByte = (char) byteReceiver.get();
+      if (currentByte == ',') {
+        commaCount++;
+      }
       stringBuilder.append(currentByte);
     }
     String firstString = null;
@@ -106,8 +110,9 @@ public class NoteFinder extends SubsystemBase {
     if (firstString.length() == 0) {
       return;
     }
-    double[] angleArray = parseDoubleArray(firstString);
-    double[] confidenceArray = parseDoubleArray(secondString);
+    commaCount = commaCount/2;
+    double[] angleArray = parseDoubleArray(firstString, commaCount);
+    double[] confidenceArray = parseDoubleArray(secondString, commaCount);
     Gamepiece gamepiece = null;
     for (int i = 0; i < angleArray.length; i++) {
       gamepiece = new Gamepiece();
@@ -117,13 +122,7 @@ public class NoteFinder extends SubsystemBase {
     }
   }
 
-  private double[] parseDoubleArray(String stringIn) {
-    int commaCount = 0;
-    for (int i = 0; i < stringIn.length(); i++) {
-      if (stringIn.charAt(i) == ',') {
-        commaCount++;
-      }
-    }
+  private double[] parseDoubleArray(String stringIn, int commaCount) {
     double[] returnArray = new double[commaCount + 1];
     String[] doubleString = stringIn.split(",");
     for (int i = 0; i < returnArray.length; i++) {
