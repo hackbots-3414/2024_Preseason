@@ -8,7 +8,7 @@ package frc.robot;
 public class Gamepiece {
     private double angle = 0;
     private double confidence = 0;
-
+    
     public double getAngle() {
         return angle;
     }
@@ -21,10 +21,10 @@ public class Gamepiece {
     public void setConfidence(double confidence) {
         this.confidence = confidence;
     }
-    
-    public String toString(){
+
+    public String toString() {
         StringBuffer out = new StringBuffer("Gamepiece angle: ").append(angle);
-        out.append("confidence: ").append(confidence);
+        out.append(", confidence: ").append(confidence);
         return out.toString();
     }
     

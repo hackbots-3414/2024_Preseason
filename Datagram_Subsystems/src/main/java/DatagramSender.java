@@ -6,8 +6,6 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-import javax.xml.crypto.Data;
-
 import frc.robot.Constants.NoteFinderConstants;
 
 /** Add your docs here. */
@@ -21,8 +19,8 @@ public class DatagramSender {
         byteSender.put(message.getBytes());
         byteSender.flip();
 
-        int byteSent = noteChannel.send(byteSender, new InetSocketAddress("127.0.0.1",NoteFinderConstants.DATAGRAM_PORT));
-        System.out.println("Bytes Sent: "+byteSent);
+        int bytesSent = noteChannel.send(byteSender, new InetSocketAddress("127.0.0.1", NoteFinderConstants.DATAGRAM_PORT));
+        System.out.println("bytesSent: "+bytesSent);
     }
 
 }
