@@ -111,8 +111,8 @@ public class NoteFinder extends SubsystemBase {
       return;
     }
     commaCount = commaCount/2;
-    double[] angleArray = parseDoubleArray(firstString, commaCount);
-    double[] confidenceArray = parseDoubleArray(secondString, commaCount);
+    double[] angleArray = parseDoubleArrayOnce(firstString, commaCount);
+    double[] confidenceArray = parseDoubleArrayOnce(secondString, commaCount);
     Gamepiece gamepiece = null;
     for (int i = 0; i < angleArray.length; i++) {
       gamepiece = new Gamepiece();
@@ -131,8 +131,19 @@ public class NoteFinder extends SubsystemBase {
     return returnArray;
   }
 
- private double[] parseDoubleArrayOnce (String stringIn) {
-  return null;
+ private double[] parseDoubleArrayOnce (String stringIn, int commaCount) {
+  double[] returnArray = new double[commaCount + 1];
+  int startVar = 0;
+  int endVar = 0;
+   for (int i = 0; i < returnArray.length; i++) {
+      endVar = stringIn.indexOf(",", startVar);
+      if (endVar < 0) {
+        endVar = stringIn.length();
+      }
+      returnArray[i] = Double.valueOf(stringIn.substring(startVar, endVar));
+      startVar = endVar + 1;
+    }
+  return returnArray;
  }
 
   private synchronized void parseBuffer() {
