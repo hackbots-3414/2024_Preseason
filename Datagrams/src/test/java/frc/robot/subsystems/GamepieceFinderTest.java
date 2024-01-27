@@ -42,7 +42,7 @@ public class GamepieceFinderTest {
 
     private static void sendData(DatagramChannel channel, ByteBuffer sendBuffer)  throws Exception {
         sendBuffer.clear();
-        sendBuffer.put("|0,100|5,95|-10,95|".getBytes());
+        sendBuffer.put("|0,100|5,95|-10, 95|".getBytes());
         sendBuffer.flip();
         int sent = channel.send(sendBuffer, new InetSocketAddress("127.0.0.1", GamepieceFinderConstants.UDP_PORT));
         System.out.println(sent);

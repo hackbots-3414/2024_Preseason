@@ -9,6 +9,8 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +121,10 @@ public class GamepieceFinder extends SubsystemBase {
     lastUpdateTimestamp = System.currentTimeMillis();
     // assignment in Java is atomic - no need to worry about another thread reading
     // partial or corrupted data
-    gamepieces = GamepieceParser.parseRawBytes(receiveBuffer);
+    //    gamepieces = GamepieceParser.parseRawBytes(receiveBuffer);
+    // ArrayList<Gamepiece> list = GamepieceParser.parseByteByByte(receiveBuffer);
+    // gamepieces = list.toArray(new Gamepiece[list.size()]);
+    gamepieces = GamepieceParser.parseWithStringBuilder(receiveBuffer);
     LOG.debug("Updated gamepieces: {}, length: {}", gamepieces, gamepieces.length);
     LOG.trace("updateGamepieces() EXIT");
   }
