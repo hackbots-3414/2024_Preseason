@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
+      "projectName": "Datagram_Subsystems"
+    },
+    {
+      "type": "java",
       "name": "DatagramSender",
       "request": "launch",
       "mainClass": "DatagramSender",

@@ -75,16 +75,59 @@ public class NoteFinder extends SubsystemBase {
     } catch (Exception ioe) {
       LOG.error("Failure to receive data", ioe);
     }
-    parseBuffer();
+    try {
+     parseBuffer();
+    } catch (Exception e) {
+      LOG.error("Bad MESSAGE", e);
+    }
   }
 
   private void parseBuffer() {
-    //[-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test."
+    // [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test."
     byteReceiver.rewind();
-    byte currentByte = byteReceiver.get();
-    if(currentByte != '[') {
-      LOG.trace("Bad message");
-      return;
+    StringBuilder stringBuilder = new StringBuilder(NoteFinderConstants.BUFFER_SIZE);
+    int leftBracketIndex = 0;
+    int rightBracketIndex = 0;
+    int commaCount = 0;
+    char currentByte = 0;
+    int startVar = 0;
+    int endVar = 0;
+    // Copying bytereciever message into bytebuilder
+    for (int i = 0; i > byteReceiver.limit(); i++) {
+      currentByte = (char) byteReceiver.get();
+      stringBuilder.append(currentByte);
+      switch (currentByte) {
+        case '[':
+          leftBracketIndex = i;
+          break;
+        case ',':
+          commaCount++;
+          break;
+        case ']':
+          rightBracketIndex = i;
+          i = byteReceiver.limit();
+          break;
+      }
+    }
+    Gamepiece note = null;
+    for (int i = 0; i <= commaCount; i++) {
+      note = new Gamepiece();
+      if (i == 0) {
+        startVar = leftBracketIndex + 1;
+        if (endVar > startVar) {
+          endVar = rightBracketIndex;
+        }
+      } else if (i == commaCount) {
+        startVar = endVar + 1;
+        endVar = rightBracketIndex;
+      } else {
+        startVar = endVar + 1;
+        endVar = stringBuilder.indexOf(",", startVar);
+      }
+      if (startVar < endVar) {
+        note.setAngle(Double.valueOf(stringBuilder.substring(startVar, endVar)));
+        gamepieces.add(note);
+      }
     }
   }
 }
