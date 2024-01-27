@@ -45,6 +45,7 @@ public class NoteFinder extends SubsystemBase {
       LOG.error("Failure to open note channel", ioe);
     }
   }
+
   public synchronized Gamepiece[] getGamepieces() {
     return gamepieces.toArray(new Gamepiece[gamepieces.size()]);
   }
@@ -75,12 +76,66 @@ public class NoteFinder extends SubsystemBase {
       LOG.error("Failure to receive data", ioe);
     }
     try {
-      parseBuffer();
+      parseBuffer2();
       LOG.trace("Updated Game Pieces: {}", gamepieces);
-    }catch( Exception e) {
+    } catch (Exception e) {
       LOG.error("Bad MESSAGE", e);
-    }    
+    }
   }
+
+  private synchronized void parseBuffer2() {
+    // [-169.9,169.9,0]|[100,99.1,70.0]|"This is a test."
+    byteReceiver.rewind();
+    gamepieces.clear();
+    StringBuilder stringBuilder = new StringBuilder(NoteFinderConstants.BUFFER_SIZE);
+    char currentByte = 0;
+    // Copying message into a bytebuilder
+    for (int i = 0; i < byteReceiver.limit(); i++) {
+      currentByte = (char) byteReceiver.get();
+      stringBuilder.append(currentByte);
+    }
+    String firstString = null;
+    String secondString = null;
+    String thirdString = null;
+    firstString = stringBuilder.substring(1, stringBuilder.indexOf("]"));
+    secondString = stringBuilder.substring(stringBuilder.indexOf("|") + 2, stringBuilder.lastIndexOf("]"));
+    thirdString = stringBuilder.substring(stringBuilder.indexOf("\"") + 1, stringBuilder.lastIndexOf("\""));
+    LOG.trace("First String: {} Second String: {} Third String: {}", firstString, secondString, thirdString);
+    status.setLength(0);
+    status.append(thirdString);
+    if (firstString.length() == 0) {
+      return;
+    }
+    double[] angleArray = parseDoubleArray(firstString);
+    double[] confidenceArray = parseDoubleArray(secondString);
+    Gamepiece gamepiece = null;
+    for (int i = 0; i < angleArray.length; i++) {
+      gamepiece = new Gamepiece();
+      gamepiece.setAngle(angleArray[i]);
+      gamepiece.setConfidence(confidenceArray[i]);
+      gamepieces.add(gamepiece);
+    }
+  }
+
+  private double[] parseDoubleArray(String stringIn) {
+    int commaCount = 0;
+    for (int i = 0; i < stringIn.length(); i++) {
+      if (stringIn.charAt(i) == ',') {
+        commaCount++;
+      }
+    }
+    double[] returnArray = new double[commaCount + 1];
+    String[] doubleString = stringIn.split(",");
+    for (int i = 0; i < returnArray.length; i++) {
+      returnArray[i] = Double.valueOf(doubleString[i]);
+    }
+    return returnArray;
+  }
+
+ private double[] parseDoubleArrayOnce (String stringIn) {
+  return null;
+ }
+
   private synchronized void parseBuffer() {
     // [-169.9,169.9,0]|[100,99.1,70.0]|"This is a test."
     byteReceiver.rewind();

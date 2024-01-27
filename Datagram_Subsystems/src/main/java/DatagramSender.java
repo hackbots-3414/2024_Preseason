@@ -14,7 +14,7 @@ public class DatagramSender {
     public static void main(String[] args) throws Exception {
         DatagramChannel noteChannel = DatagramChannel.open();
         ByteBuffer byteSender = ByteBuffer.allocate(NoteFinderConstants.BUFFER_SIZE);
-        String message = "[-169.9, 169.9,0]|[100,99.1,70.0]|\"This is a test. `~!@#$%^&*()_+|\\}]{[]};:',.<>/?\"";
+        String message = "[-169.9, 169.9,0]|[100,99.1,70.0]|\"This is a test. `~!@#$%^&*()_+\\}{};:',.<>/?\"";
         byteSender.clear();
         byteSender.put(message.getBytes());
         byteSender.flip();
