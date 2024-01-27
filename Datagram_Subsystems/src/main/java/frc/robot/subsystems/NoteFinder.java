@@ -76,6 +76,7 @@ public class NoteFinder extends SubsystemBase {
     }
     try {
       parseBuffer();
+      LOG.trace("Updated Game Pieces: {}", gamepieces);
     }catch( Exception e) {
       LOG.error("Bad MESSAGE", e);
     }    
