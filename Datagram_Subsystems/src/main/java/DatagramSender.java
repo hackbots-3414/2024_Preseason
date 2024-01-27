@@ -20,4 +20,5 @@ public class DatagramSender {
         int bytesSent = noteChannel.send(byteSender, new InetSocketAddress("127.0.0.1", NoteFinderConstants.DATAGRAM_PORT));
         System.out.println("bytesSent: "+bytesSent);
     }
+
 }
