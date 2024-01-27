@@ -1,13 +1,14 @@
-package frc.robot;
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+package frc.robot;
 
 /** Add your docs here. */
 public class Gamepiece {
     private double angle = 0;
-    private double confidence =0;
+    private double confidence = 0;
+    
     public double getAngle() {
         return angle;
     }
@@ -26,7 +27,5 @@ public class Gamepiece {
         out.append(", confidence: ").append(confidence);
         return out.toString();
     }
-
-
-
+    
 }
