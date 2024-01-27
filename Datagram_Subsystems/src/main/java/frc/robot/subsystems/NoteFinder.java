@@ -77,12 +77,51 @@ public class NoteFinder extends SubsystemBase {
     }
     try {
      parseBuffer();
+     LOG.trace("Updated Game Pieces: {}", gamepieces);
     } catch (Exception e) {
       LOG.error("Bad MESSAGE", e);
     }
   }
 
-  private void parseBuffer() {
+  private synchronized void parseBuffer2() {
+    // [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test."
+    byteReceiver.rewind();
+    StringBuilder stringBuilder = new StringBuilder(NoteFinderConstants.BUFFER_SIZE);
+    char currentByte = 0;
+    // Copying bytereciever message into bytebuilder
+    for (int i = 0; i > byteReceiver.limit(); i++) {
+      currentByte = (char) byteReceiver.get();
+      stringBuilder.append(currentByte);
+    }
+    String firstString = null;
+    String secondString = null;
+    String thirdString = null;
+    firstString = stringBuilder.substring(1,stringBuilder.indexOf("]"));
+    secondString = stringBuilder.substring(stringBuilder.indexOf("|")+2,stringBuilder.lastIndexOf("]"));
+    thirdString = stringBuilder.substring(stringBuilder.indexOf("\"")+1, stringBuilder.lastIndexOf("\""));
+    LOG.trace("First String: {}, Second String: {}, Third String: {}", firstString, secondString, thirdString);
+    status.setLength(0);
+    status.append(thirdString);
+    if (firstString.length() == 0){
+      return;
+    }
+  }
+
+  private double[] doubleParseArray(String stringIn) {
+    int commaCount = 0;
+    for (int i = 0; i < stringIn.length(); i++) {
+      if (stringIn.charAt(i) == ',') {
+        commaCount++;
+      }
+    }
+    double[] returnArray = new double[commaCount + 1];
+    stringIn.split(",");
+    for (int i = 0; i < returnArray.length; i++) {
+
+    }
+  }
+
+  private synchronized void parseBuffer() {
     // [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test."
     byteReceiver.rewind();
     StringBuilder stringBuilder = new StringBuilder(NoteFinderConstants.BUFFER_SIZE);
