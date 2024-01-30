@@ -132,4 +132,8 @@ public class GamepieceFinder extends SubsystemBase {
   public Gamepiece[] getGamepieces() {
     return gamepieces;
   }
+  
+  public long getLastUpdateTimestamp() {
+    return lastUpdateTimestamp;
+  }
 }
