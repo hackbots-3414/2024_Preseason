@@ -26,7 +26,7 @@ import frc.robot.Constants.NoteFinderConstants;
  * 
  * [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test.
  * `~!@#$%^&*()_+\{};:',.<>/?"
- *  '|'[]' were deleted from dataset.
+ * '|'[]' were deleted from dataset.
  */
 public class NoteFinder extends SubsystemBase {
   private static final Logger LOG = LoggerFactory.getLogger(NoteFinder.class);
@@ -44,12 +44,13 @@ public class NoteFinder extends SubsystemBase {
       noteChannel = DatagramChannel.open();
       noteChannel.configureBlocking(false);
       noteChannel.socket().bind(new InetSocketAddress(NoteFinderConstants.DATAGRAM_PORT));
-  // Catching and Logging an error 
+      // Catching and Logging an error
     } catch (IOException ioe) {
       LOG.error("Failure to open note channel", ioe);
     }
   }
-// Synchronizing makes sure that Read and Write don't interfere with eachother
+
+  // Synchronizing makes sure that Read and Write don't interfere with eachother
   public synchronized Gamepiece[] getGamepieces() {
     return gamepieces.toArray(new Gamepiece[gamepieces.size()]);
   }
@@ -60,6 +61,7 @@ public class NoteFinder extends SubsystemBase {
 
   public long getLastUpdateTime() {
     return lastUpdateTime;
+
   }
 
   @Override
@@ -90,7 +92,7 @@ public class NoteFinder extends SubsystemBase {
   }
 
   private synchronized void parseBuffer() {
-    // [Angle]|[Confidence]|"messsage" 
+    // [Angle]|[Confidence]|"messsage"
     // Commas within Angle and Confidence indicate multiple gamepieces detected
     // [-169.9,169.9,0]|[100,99.1,70.0]|"This is a test."
     // Taking bytereceiver to beginning then clear gamepieces.
@@ -121,6 +123,7 @@ public class NoteFinder extends SubsystemBase {
     status.setLength(0);
     status.append(thirdString);
     if (firstString.length() == 0) {
+      lastUpdateTime = System.currentTimeMillis();
       return;
     }
     double[] angleArray = parseDoubleArray(firstString, commaCount);
@@ -132,7 +135,9 @@ public class NoteFinder extends SubsystemBase {
       gamepiece.setConfidence(confidenceArray[i]);
       gamepieces.add(gamepiece);
     }
+    lastUpdateTime = System.currentTimeMillis();
   }
+
   private double[] parseDoubleArray(String stringIn, int commaCount) {
     double[] returnArray = new double[commaCount + 1];
     int startVar = 0;
