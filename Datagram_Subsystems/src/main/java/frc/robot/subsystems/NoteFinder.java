@@ -26,7 +26,7 @@ import frc.robot.Constants.NoteFinderConstants;
  * 
  * [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test.
  * `~!@#$%^&*()_+|\}]{[]};:',.<>/?"
- */
+  */
 public class NoteFinder extends SubsystemBase {
   private static final Logger LOG = LoggerFactory.getLogger(NoteFinder.class);
   private DatagramChannel noteChannel = null;
@@ -34,19 +34,19 @@ public class NoteFinder extends SubsystemBase {
   private ArrayList<Gamepiece> gamepieces = new ArrayList<>();
   private StringBuffer status = new StringBuffer();
   private long lastUpdateTime = 0;
-
+  
   /** Creates a new NoteFinder. */
   public NoteFinder() {
-    try {
+        try {
       noteChannel = DatagramChannel.open();
       noteChannel.configureBlocking(false);
       noteChannel.socket().bind(new InetSocketAddress(NoteFinderConstants.DATAGRAM_PORT));
-    } catch (IOException ioe) {
+          } catch (IOException ioe) {
       LOG.error("Failure to open note channel", ioe);
     }
   }
 
-  public synchronized Gamepiece[] getGamepieces() {
+    public synchronized Gamepiece[] getGamepieces() {
     return gamepieces.toArray(new Gamepiece[gamepieces.size()]);
   }
 
@@ -65,13 +65,13 @@ public class NoteFinder extends SubsystemBase {
   }
 
   public void dataReceiver() {
-    try {
+        try {
       byteReceiver.clear();
       SocketAddress senderAddress = noteChannel.receive(byteReceiver);
       if (senderAddress == null) {
         return;
       }
-      LOG.trace("receive data: {} Sender: {}", byteReceiver, senderAddress);
+            LOG.trace("receive data: {} Sender: {}", byteReceiver, senderAddress);
     } catch (Exception ioe) {
       LOG.error("Failure to receive data", ioe);
     }
@@ -81,12 +81,12 @@ public class NoteFinder extends SubsystemBase {
     } catch (Exception e) {
       LOG.error("Bad MESSAGE", e);
     }
-
+  
   }
 
   private synchronized void parseBuffer2() {
     // [-169.9, 169.9,0]|[100,99.1,70.0]|"This is a test."
-    byteReceiver.rewind();
+        byteReceiver.rewind();
     gamepieces.clear();
     StringBuilder stringBuilder = new StringBuilder(NoteFinderConstants.BUFFER_SIZE);
     char currentByte = 0;
@@ -99,17 +99,17 @@ public class NoteFinder extends SubsystemBase {
       }
       stringBuilder.append(currentByte);
     }
-    String firstString = null;
+        String firstString = null;
     String secondString = null;
     String thirdString = null;
-    firstString = stringBuilder.substring(1, stringBuilder.indexOf("]"));
+        firstString = stringBuilder.substring(1, stringBuilder.indexOf("]"));
     secondString = stringBuilder.substring(stringBuilder.indexOf("|") + 2, stringBuilder.lastIndexOf("]"));
     thirdString = stringBuilder.substring(stringBuilder.indexOf("\")") + 1, stringBuilder.lastIndexOf("\""));
-    LOG.trace("First String: {} Second String: {} Third String: {}", firstString, secondString, thirdString);
+        LOG.trace("First String: {} Second String: {} Third String: {}", firstString, secondString, thirdString);
     status.setLength(0);
     status.append(thirdString);
     if (firstString.length() == 0) {
-      return;
+            return;
     }
     commaCount = commaCount/2;
     double[] angleArray = parseDoubleArrayOnce(firstString, commaCount);
@@ -121,10 +121,10 @@ public class NoteFinder extends SubsystemBase {
       gamepiece.setConfidence(confidenceArray[i]);
       gamepieces.add(gamepiece);
     }
-  }
+      }
 
   private double[] parseDoubleArray(String stringIn, int commaCount) {
-    double[] returnArray = new double[commaCount + 1];
+double[] returnArray = new double[commaCount + 1];
     String[] doubleString = stringIn.split(".");
     for (int i = 0; i < returnArray.length; i++) {
       returnArray[i] = Double.valueOf(doubleString[i]);
@@ -173,7 +173,7 @@ public class NoteFinder extends SubsystemBase {
           i = byteReceiver.limit();
           break;
       }
-    }
+}
     Gamepiece note = null;
     for (int i = 0; i <= commaCount; i++) {
       note = new Gamepiece();
