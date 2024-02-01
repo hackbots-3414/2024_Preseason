@@ -23,7 +23,7 @@ public class Gamepiece {
     }
 
     public String toString() {
-        StringBuffer out = new StringBuffer("Gamepiece angle: ").append(angle);
+        StringBuilder out = new StringBuilder("Gamepiece angle: ").append(angle);
         out.append(", confidence: ").append(confidence);
         return out.toString();
     }

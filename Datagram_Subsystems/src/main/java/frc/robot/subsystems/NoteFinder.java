@@ -96,7 +96,7 @@ public class NoteFinder extends SubsystemBase {
     // Commas within Angle and Confidence indicate multiple gamepieces detected
     // [-169.9,169.9,0]|[100,99.1,70.0]|"This is a test."
     // Taking bytereceiver to beginning then clear gamepieces.
-    byteReceiver.rewind();
+    byteReceiver.flip();
     gamepieces.clear();
     stringBuilder.setLength(0);
     char currentByte = 0;
